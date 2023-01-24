@@ -1,18 +1,21 @@
 package com.piotrzawada.BarberShopBookingSystem;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Entity
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
+@Table
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +30,7 @@ public class User {
     @NotBlank
     String password;
 
+    @OneToMany(mappedBy = "user")
     @JsonIgnore
     List<Booking> booking;
 
