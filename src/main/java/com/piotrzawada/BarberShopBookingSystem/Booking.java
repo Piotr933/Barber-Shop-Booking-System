@@ -24,7 +24,7 @@ public class Booking {
 
     @JsonIgnore
     @ManyToOne
-    User user;
+    Userr userr;
 
     public Booking(LocalDateTime localDateTime, double price) {
         this.localDateTime = localDateTime;

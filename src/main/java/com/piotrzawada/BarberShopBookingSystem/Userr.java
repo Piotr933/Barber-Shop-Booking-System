@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table
-public class User {
+public class Userr {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
@@ -30,11 +30,11 @@ public class User {
     @NotBlank
     String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "userr")
     @JsonIgnore
     List<Booking> booking;
 
-    public User(String name, String email) {
+    public Userr(String name, String email) {
         this.name = name;
         this.email = email;
     }
