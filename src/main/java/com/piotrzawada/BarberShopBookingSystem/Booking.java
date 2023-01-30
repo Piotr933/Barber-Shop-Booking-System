@@ -18,7 +18,7 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     Long id;
-    @JsonIgnore
+
     LocalDateTime localDateTime;
     double price;
 
