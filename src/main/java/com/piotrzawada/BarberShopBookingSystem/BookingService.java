@@ -21,7 +21,7 @@ public class BookingService {
     }
 
     public List<Booking> findAvailableTimeSlots() {
-        return bookingRepo.findAllByUserr(null);
+        return bookingRepo.findAllByAppUser(null);
     }
 
     public void saveBooking(Booking booking) {
