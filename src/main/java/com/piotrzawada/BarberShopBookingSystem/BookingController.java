@@ -11,12 +11,10 @@ import java.time.LocalDateTime;
 public class BookingController {
 
     BookingService bookingService;
-
-    public BookingController(@Autowired BookingService bookingService) {
+    @Autowired
+    public BookingController( BookingService bookingService) {
         this.bookingService = bookingService;
     }
-
-
 
     @PostMapping("/add")
     public ResponseEntity<?> addEmptyBookingSlots(@RequestParam int day, @RequestParam int month) {

@@ -4,11 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 @Entity
@@ -26,9 +24,12 @@ public class AppUser {
             "+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$")
     String email;
 
-    @Size(min = 8,max = 25)
+    @Column(length = 1024)
     @NotBlank
     String password;
+
+    @JsonIgnore
+    String role;
 
     @OneToMany(mappedBy = "appUser")
     @JsonIgnore
