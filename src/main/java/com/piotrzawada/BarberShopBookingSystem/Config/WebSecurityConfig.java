@@ -1,6 +1,5 @@
 package com.piotrzawada.BarberShopBookingSystem.Config;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,6 +40,7 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/h2-console/**").permitAll();
                     auth.requestMatchers("/test/testForAll").permitAll();
                     auth.requestMatchers("/test/testAdmin").hasAnyRole("USER");
+                    auth.requestMatchers("/api/bookings/book").hasRole("USER");
                     auth.requestMatchers("/").permitAll();
                     auth.anyRequest().permitAll();
                 })

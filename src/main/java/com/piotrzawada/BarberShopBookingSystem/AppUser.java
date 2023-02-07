@@ -19,7 +19,7 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     Long id;
-    String name;
+    String nickname;
     @Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)" +
             "+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$")
     String email;
@@ -36,7 +36,7 @@ public class AppUser {
     List<Booking> booking;
 
     public AppUser(String name, String email) {
-        this.name = name;
+        this.nickname = name;
         this.email = email;
     }
 }
