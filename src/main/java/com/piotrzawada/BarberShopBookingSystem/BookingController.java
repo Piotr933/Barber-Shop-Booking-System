@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -42,6 +43,31 @@ public class BookingController {
         return new ResponseEntity<>("This time is already booked", HttpStatus.BAD_REQUEST);
     }
 
+    @PutMapping("/cancel")
+    public ResponseEntity<?> cancelVisit(@AuthenticationPrincipal UserDetails userDetails,
+                                         @RequestParam String ldt) {
+        LocalDateTime localDateTime = LocalDateTime.parse(ldt);
+        AppUser appUser = userService.getByEmail(userDetails.getUsername());
+        Booking booking = bookingService.getByDataTime(localDateTime);
+        if (booking.getAppUser().email.equals(userDetails.getUsername())) {
+            booking.setAppUser(null);
+            bookingService.saveBooking(booking);
+            return new ResponseEntity("Your Booking has been cancelled",HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Bad request",HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> myBookings(@AuthenticationPrincipal UserDetails userDetails) {
+        AppUser appUser = userService.getByEmail(userDetails.getUsername());
+        List<Booking> myBookings = appUser.booking;
+        if (myBookings.isEmpty()) {
+            return new ResponseEntity<>("You didn't book any visit yet",HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(myBookings,HttpStatus.OK);
+    }
+
+
     @PostMapping("/add")
     public ResponseEntity<?> addEmptyBookingSlots(@RequestParam int day, @RequestParam int month) {
         LocalDateTime localDateTime = LocalDateTime.of(2023, month, day, 9, 0);
@@ -56,7 +82,6 @@ public class BookingController {
 
         return new ResponseEntity<>("ALL GOOD", HttpStatus.OK);
     }
-
 
     @GetMapping("/availableTimes")
     public ResponseEntity <?> getAvailableSlots() {
