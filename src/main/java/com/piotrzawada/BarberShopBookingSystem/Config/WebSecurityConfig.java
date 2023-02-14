@@ -37,10 +37,12 @@ public class WebSecurityConfig {
         return  httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/h2-console/**").permitAll();
                     auth.requestMatchers("/test/testForAll").permitAll();
-                    auth.requestMatchers("/test/testAdmin").hasAnyRole("USER");
-                    auth.requestMatchers("/api/bookings/book").hasRole("USER");
+                    auth.requestMatchers("/test/testAdmin").hasAnyRole("ADMIN");
+                    auth.requestMatchers("/api/bookings/book").hasAnyRole("USER", "ADMIN");
+                    auth.requestMatchers("/api/bookings/cancel").hasAnyRole("USER", "ADMIN");
+                    auth.requestMatchers("/api/bookings/myBookings").hasRole("USER");
+                    auth.requestMatchers("/api/bookings/add").hasRole("ADMIN");
                     auth.requestMatchers("/").permitAll();
                     auth.anyRequest().permitAll();
                 })

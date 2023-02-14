@@ -57,7 +57,7 @@ public class BookingController {
         return new ResponseEntity<>("Bad request",HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/myBookings")
     public ResponseEntity<?> myBookings(@AuthenticationPrincipal UserDetails userDetails) {
         AppUser appUser = userService.getByEmail(userDetails.getUsername());
         List<Booking> myBookings = appUser.booking;
