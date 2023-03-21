@@ -32,6 +32,8 @@ This project is still in very early stage of development.
 * Spring Security
 * Spring Validation
 * Lombok
+* JUnit
+* Mockito
 
 ## Tools
 * IntelliJ IDA
