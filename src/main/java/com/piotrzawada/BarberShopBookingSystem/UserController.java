@@ -25,11 +25,11 @@ public class UserController {
     public ResponseEntity<?> register(@RequestBody AppUser user) {
 
         if (userService.userExist(user.email)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("User with that username already exists.", HttpStatus.CONFLICT);
         }
         user.setRole("ROLE_USER");
         user.setPassword(encoder.encode(user.getPassword()));
         userService.registerUser(user);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("User has been registered", HttpStatus.OK);
     }
 }
