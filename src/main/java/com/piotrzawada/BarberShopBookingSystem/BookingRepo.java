@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface BookingRepo extends CrudRepository<Booking, Long> {
     List<Booking> findAllByAppUser(AppUser appUser);
+
+    List<Booking> findByAppUserIsNotNull();
     Booking findByLocalDateTime(LocalDateTime localDateTime);
 }

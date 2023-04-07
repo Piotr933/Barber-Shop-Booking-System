@@ -31,4 +31,8 @@ public class BookingService {
     public void saveBooking(Booking booking) {
         bookingRepo.save(booking);
     }
+
+    public List<Booking> allBooked() {
+        return bookingRepo.findByAppUserIsNotNull();
+    }
 }
