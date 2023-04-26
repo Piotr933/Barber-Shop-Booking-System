@@ -1,5 +1,6 @@
 package com.piotrzawada.BarberShopBookingSystem;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping("/api/register")
-    public ResponseEntity<?> register(@RequestBody AppUser user) {
+    public ResponseEntity<?> register(@RequestBody @Valid AppUser user) {
 
         if (userService.userExist(user.email)) {
             return new ResponseEntity<>("User with that username already exists.", HttpStatus.CONFLICT);

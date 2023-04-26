@@ -2,7 +2,6 @@ package com.piotrzawada.BarberShopBookingSystem;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +25,7 @@ public class AppUser {
     String email;
 
     @Column(length = 1024)
-    @NotBlank
+    @Pattern(regexp ="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", message = "Adam")
     String password;
 
     @JsonIgnore
