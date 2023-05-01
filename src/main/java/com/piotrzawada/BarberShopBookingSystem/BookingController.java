@@ -47,14 +47,21 @@ public class BookingController {
     @PutMapping("/cancel")
     public ResponseEntity<?> cancelVisit(@AuthenticationPrincipal UserDetails userDetails,
                                          @RequestParam String ldt) {
+
         LocalDateTime localDateTime = LocalDateTime.parse(ldt);
-        AppUser appUser = userService.getByEmail(userDetails.getUsername());
         Booking booking = bookingService.getByDataTime(localDateTime);
+
+        if (booking.getAppUser() == null) {
+            return new ResponseEntity<>("There is not existing bookings of that data and time", HttpStatus.OK);
+        }
+
         if (booking.getAppUser().email.equals(userDetails.getUsername())) {
+
             booking.setAppUser(null);
             bookingService.saveBooking(booking);
-            return new ResponseEntity("Your Booking has been cancelled",HttpStatus.OK);
+            return new ResponseEntity<>("Your Booking has been cancelled",HttpStatus.OK);
         }
+
         return new ResponseEntity<>("Bad request",HttpStatus.BAD_REQUEST);
     }
 
