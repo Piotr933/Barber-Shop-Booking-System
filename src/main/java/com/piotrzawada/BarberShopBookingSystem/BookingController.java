@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,49 +18,63 @@ public class BookingController {
     @Autowired
     UserService userService;
 
+
     @Autowired
     public BookingController( BookingService bookingService) {
         this.bookingService = bookingService;
     }
 
     @PutMapping("/book")
-    public  ResponseEntity<?> bookVisit(@AuthenticationPrincipal UserDetails userDetails,
+    public  ResponseEntity<Response> bookVisit(@AuthenticationPrincipal UserDetails userDetails,
                                         @RequestParam String localDateTime) {
-
+        Response response = new Response();
         AppUser appUser = userService.getByEmail(userDetails.getUsername());
         Booking booking = bookingService.getByDataTime(LocalDateTime.parse(localDateTime));
+
         if (booking == null) {
-            return new ResponseEntity<>("There is not Booking available at this data time", HttpStatus.BAD_REQUEST);
+            response.setMessage("There is not Booking available at this data time");
+
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
         if (booking.getAppUser() == null) {
             booking.setAppUser(appUser);
             bookingService.saveBooking(booking);
-            return new ResponseEntity<>("Your visit has been booked", HttpStatus.OK);
+            response.setMessage("Your visit has been booked");
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>("This time is already booked", HttpStatus.BAD_REQUEST);
+        response.setMessage("This time is already booked");
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/cancel")
-    public ResponseEntity<?> cancelVisit(@AuthenticationPrincipal UserDetails userDetails,
+    public ResponseEntity<Response> cancelVisit(@AuthenticationPrincipal UserDetails userDetails,
                                          @RequestParam String ldt) {
 
         LocalDateTime localDateTime = LocalDateTime.parse(ldt);
         Booking booking = bookingService.getByDataTime(localDateTime);
+        Response response = new Response();
 
         if (booking.getAppUser() == null) {
-            return new ResponseEntity<>("There is not existing bookings of that data and time", HttpStatus.OK);
+            response.setMessage("There is not existing bookings of that data and time");
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
 
         if (booking.getAppUser().email.equals(userDetails.getUsername())) {
-
             booking.setAppUser(null);
             bookingService.saveBooking(booking);
-            return new ResponseEntity<>("Your Booking has been cancelled",HttpStatus.OK);
+            response.setMessage("Your Booking has been cancelled");
+
+            return new ResponseEntity<>(response,HttpStatus.OK);
         }
 
-        return new ResponseEntity<>("Bad request",HttpStatus.BAD_REQUEST);
+        response.setMessage("Bad request");
+
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/myBookings")
