@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 @Entity
@@ -21,11 +20,13 @@ public class AppUser {
     Long id;
     String nickname;
     @Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)" +
-            "+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$", message = "Email is invalid")
+            "+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$", message = "Invalid Email Address")
     String email;
 
     @Column(length = 1024)
-    @Pattern(regexp ="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", message = "Adam")
+    @Pattern(regexp ="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", message = "Invalid password. " +
+            "Please ensure it includes at least one uppercase letter, one lowercase letter, one digit, one special" +
+            " character (#?!@$%^&*-), and is at least eight characters long.")
     String password;
 
     @JsonIgnore
