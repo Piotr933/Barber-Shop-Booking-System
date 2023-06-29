@@ -3,6 +3,7 @@ package com.piotrzawada.BarberShopBookingSystem;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -10,7 +11,6 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepo userRepo;
-
 
     public void registerUser(AppUser user) {
         userRepo.save(user);
@@ -22,6 +22,9 @@ public class UserService {
     }
     public AppUser getByEmail(String email) {
         return userRepo.findByEmail(email);
+    }
+    public List<AppUser> usersByRole(String role) {
+        return userRepo.findAllByRole(role);
     }
 }
 
