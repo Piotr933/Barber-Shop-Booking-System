@@ -7,6 +7,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -57,21 +60,42 @@ public class AdminController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<?> addEmptyBookingSlots(@RequestParam int day, @RequestParam int month) {
-        LocalDateTime localDateTime = LocalDateTime.of(2023, month, day, 9, 0);
+    @PostMapping ("/add")
+    public ResponseEntity<Response> addEmptyBookingSlotsFor(@RequestParam int days ) {
+        Response response = new Response();
 
+        if (days > 30 || days < 0) {
+            response.setMessage("Adding new slots failed: Invalid entry. Please enter the value between 1 and 30 ");
 
-        do {
-            Booking booking = new Booking(localDateTime, 20);
-            bookingService.saveBooking(booking);
-            localDateTime = localDateTime.plusMinutes(30);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
 
-        } while (localDateTime.getHour() != 18);
+        int updatedSlots = 0;
+        LocalDate lastUpdatedAt = LocalDate.from(bookingService.latestDateTime());
+        LocalDateTime current= LocalDateTime.of(lastUpdatedAt.getYear(), lastUpdatedAt.getMonth(),
+                lastUpdatedAt.getDayOfMonth(), 0, 0);
+        LocalDateTime updateTill = current.plusDays(days);
 
-        return new ResponseEntity<>("ALL GOOD", HttpStatus.OK);
+        while (!current.isAfter(updateTill)) {
+            if (current.getDayOfWeek() != DayOfWeek.SATURDAY && current.getDayOfWeek() != DayOfWeek.SUNDAY) {
+                LocalDateTime startDay = current.withHour(9).withMinute(0);
+                LocalDateTime endDay = current.withHour(18).withMinute(0);
+                LocalDateTime slotTime = startDay;
+
+                while (!slotTime.isAfter(endDay)) {
+                    Booking booking = new Booking(slotTime, 20);
+                        bookingService.saveBooking(booking);
+                        slotTime = slotTime.plusMinutes(30);
+                        updatedSlots++;
+                }
+            }
+            current = current.plusDays(1);
+        }
+
+        response.setMessage("Booking Slots has been updated: " + updatedSlots);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
     @GetMapping("/usersBookings")
     public ResponseEntity<?> userBookings(@AuthenticationPrincipal UserDetails userDetails) {
         List<Booking> bookings = bookingService.allBooked();

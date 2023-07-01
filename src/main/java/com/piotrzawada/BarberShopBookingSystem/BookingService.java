@@ -2,7 +2,6 @@ package com.piotrzawada.BarberShopBookingSystem;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +23,7 @@ public class BookingService {
     public Booking getByDataTime(LocalDateTime localDateTime) {
         return bookingRepo.findByLocalDateTime(localDateTime);
     }
+
     public List<Booking> findAvailableTimeSlots() {
         return bookingRepo.findAllByAppUser(null);
     }
@@ -31,8 +31,15 @@ public class BookingService {
     public void saveBooking(Booking booking) {
         bookingRepo.save(booking);
     }
-
     public List<Booking> allBooked() {
         return bookingRepo.findByAppUserIsNotNull();
+    }
+
+    public LocalDateTime latestDateTime() {
+        Optional<LocalDateTime> localDateTimeOptional = Optional.ofNullable(bookingRepo.findLatestDateTime());
+        if (localDateTimeOptional.isEmpty()) {
+            return LocalDateTime.now();
+        }
+        return bookingRepo.findLatestDateTime();
     }
 }
