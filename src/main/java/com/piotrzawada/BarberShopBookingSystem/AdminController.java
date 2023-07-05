@@ -106,4 +106,15 @@ public class AdminController {
         }
         return new ResponseEntity<>(bookingsMap, HttpStatus.OK);
     }
+    @PutMapping ("/cancelBooking")
+    public ResponseEntity<Response> cancelBookingByDataTime (@RequestParam String ldt) {
+        LocalDateTime localDateTime = LocalDateTime.parse(ldt);
+        Booking booking = bookingService.getByDataTime(localDateTime);
+        booking.setAppUser(null);
+        bookingService.saveBooking(booking);
+        Response response = new Response();
+        response.setMessage("Booking Cancelled");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
