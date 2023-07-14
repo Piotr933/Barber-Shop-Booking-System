@@ -14,4 +14,5 @@ public interface BookingRepo extends CrudRepository<Booking, Long> {
 
     @Query("SELECT MAX(b.localDateTime) FROM Booking b")
     LocalDateTime findLatestDateTime();
+    List<Booking> findByAppUserNullAndLocalDateTimeBetween(LocalDateTime startDateTime, LocalDateTime endDateTime);
 }

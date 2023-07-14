@@ -2,7 +2,10 @@ package com.piotrzawada.BarberShopBookingSystem;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,5 +44,11 @@ public class BookingService {
             return LocalDateTime.now();
         }
         return bookingRepo.findLatestDateTime();
+    }
+
+    public List<Booking> availableByDate (LocalDate localDate) {
+        LocalDateTime startDateTime = LocalDateTime.of(localDate, LocalTime.MIN);
+        LocalDateTime endDateTime = LocalDateTime.of(localDate, LocalTime.MAX);
+        return bookingRepo.findByAppUserNullAndLocalDateTimeBetween(startDateTime, endDateTime);
     }
 }

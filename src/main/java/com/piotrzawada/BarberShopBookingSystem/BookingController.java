@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,13 +22,13 @@ public class BookingController {
 
 
     @Autowired
-    public BookingController( BookingService bookingService) {
+    public BookingController(BookingService bookingService) {
         this.bookingService = bookingService;
     }
 
     @PutMapping("/book")
-    public  ResponseEntity<Response> bookVisit(@AuthenticationPrincipal UserDetails userDetails,
-                                        @RequestParam String localDateTime) {
+    public ResponseEntity<Response> bookVisit(@AuthenticationPrincipal UserDetails userDetails,
+                                              @RequestParam String localDateTime) {
         Response response = new Response();
         AppUser appUser = userService.getByEmail(userDetails.getUsername());
         Booking booking = bookingService.getByDataTime(LocalDateTime.parse(localDateTime));
@@ -52,7 +54,7 @@ public class BookingController {
 
     @PutMapping("/cancel")
     public ResponseEntity<Response> cancelVisit(@AuthenticationPrincipal UserDetails userDetails,
-                                         @RequestParam String ldt) {
+                                                @RequestParam String ldt) {
 
         LocalDateTime localDateTime = LocalDateTime.parse(ldt);
         Booking booking = bookingService.getByDataTime(localDateTime);
@@ -69,12 +71,12 @@ public class BookingController {
             bookingService.saveBooking(booking);
             response.setMessage("Your Booking has been cancelled");
 
-            return new ResponseEntity<>(response,HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
 
         response.setMessage("Bad request");
 
-        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/myBookings")
@@ -82,13 +84,14 @@ public class BookingController {
         AppUser appUser = userService.getByEmail(userDetails.getUsername());
         List<Booking> myBookings = appUser.booking;
         if (myBookings.isEmpty()) {
-            return new ResponseEntity<>("You didn't book any visit yet",HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("You didn't book any visit yet", HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(myBookings,HttpStatus.OK);
+        return new ResponseEntity<>(myBookings, HttpStatus.OK);
     }
 
     @GetMapping("/availableTimes")
-    public ResponseEntity <?> getAvailableSlots() {
-        return  new ResponseEntity<>(bookingService.findAvailableTimeSlots(), HttpStatus.OK);
+    public ResponseEntity<?> getAvailableSlots(@RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        return new ResponseEntity<>(bookingService.availableByDate(localDate), HttpStatus.OK);
     }
 }
