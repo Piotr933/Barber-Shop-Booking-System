@@ -1,5 +1,6 @@
 package com.piotrzawada.BarberShopBookingSystem;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDateTime;
@@ -10,4 +11,8 @@ public interface BookingRepo extends CrudRepository<Booking, Long> {
 
     List<Booking> findByAppUserIsNotNull();
     Booking findByLocalDateTime(LocalDateTime localDateTime);
+
+    @Query("SELECT MAX(b.localDateTime) FROM Booking b")
+    LocalDateTime findLatestDateTime();
+    List<Booking> findByAppUserNullAndLocalDateTimeBetween(LocalDateTime startDateTime, LocalDateTime endDateTime);
 }

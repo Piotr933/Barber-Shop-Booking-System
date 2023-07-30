@@ -44,6 +44,7 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/api/bookings/myBookings").hasRole("USER");
                     auth.requestMatchers("/api/admin/add").hasRole("ADMIN");
                     auth.requestMatchers("/api/admin/usersBookings").hasAnyRole("ADMIN");
+                    auth.requestMatchers("/api/admin/cancelBooking").hasAnyRole("ADMIN");
                     auth.requestMatchers("/").permitAll();
                     auth.anyRequest().permitAll();
                 })

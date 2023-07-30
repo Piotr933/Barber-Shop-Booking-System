@@ -23,14 +23,24 @@ public class UserController {
     }
 
     @PostMapping("/api/register")
-    public ResponseEntity<?> register(@RequestBody @Valid AppUser user) {
+    public ResponseEntity<Response> register(@RequestBody @Valid AppUser user) {
+        Response response = new Response();
 
         if (userService.userExist(user.email)) {
-            return new ResponseEntity<>("User with that username already exists.", HttpStatus.CONFLICT);
+            response.setMessage("User with that username already exists.");
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
         }
         user.setRole("ROLE_USER");
         user.setPassword(encoder.encode(user.getPassword()));
         userService.registerUser(user);
-        return new ResponseEntity<>("User has been registered", HttpStatus.OK);
+        response.setMessage("User has been registered");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
+
+
+
+
+
+
