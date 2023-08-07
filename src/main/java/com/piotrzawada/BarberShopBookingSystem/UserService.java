@@ -18,6 +18,7 @@ public class UserService {
 
     public boolean userExist(String email) {
         Optional<AppUser> user = Optional.ofNullable(userRepo.findByEmail(email));
+
         return user.isPresent();
     }
     public AppUser getByEmail(String email) {

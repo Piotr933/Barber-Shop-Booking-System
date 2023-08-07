@@ -7,7 +7,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -91,9 +90,7 @@ public class AdminController {
             }
             current = current.plusDays(1);
         }
-
         response.setMessage("Booking Slots has been updated: " + updatedSlots);
-
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/usersBookings")
@@ -104,6 +101,7 @@ public class AdminController {
         for (Booking booking : bookings) {
             bookingsMap.put(booking.localDateTime.toString(), booking.appUser.email);
         }
+
         return new ResponseEntity<>(bookingsMap, HttpStatus.OK);
     }
     @PutMapping ("/cancelBooking")
