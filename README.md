@@ -20,20 +20,16 @@ Piotr Zawada
 
 ## Version History
 
+* 0.2.1  - 07.08.2023
+* 0.2.0  - 30.07.2023
+* 0.1.1  - 02.05.2023
 * 0.1.0  - 21.03.2023
-* 0.1.1  - 02.05.2023 
-* 0.2.0  - 30.07.2023 
 
-## What's new in 0.2.0 Version:
+## What's new in 0.2.1 Version:
 
-   * Users are now able to see the available times to book appointments by providing a specific date
-     instead of seeing all available times as previously.
-   * Admin can cancel users bookings 
-   * New way of adding booking slots by the admin.
-   * Admin registration
-   * Validation Exception handler to handle exceptions when the email or password criteria 
-     are not met during the user registration process.
-   * Custom response message.
+   * The bug has been fixed when user was able to see available booking slots in the same day and in the past
+   * The database has been connected to an in memory for testing  purposes 
+   * The code style has been improved.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
