@@ -92,6 +92,10 @@ public class BookingController {
     @GetMapping("/availableTimes")
     public ResponseEntity<?> getAvailableSlots(@RequestParam String date) {
         LocalDate localDate = LocalDate.parse(date);
+
+        if (localDate.isBefore(LocalDate.now()) || localDate.equals(LocalDate.now())) {
+            return new ResponseEntity<>("Wrong date has been chosen", HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(bookingService.availableByDate(localDate), HttpStatus.OK);
     }
 }
