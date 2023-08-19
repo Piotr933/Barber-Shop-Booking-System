@@ -5,6 +5,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
+/**
+ * Implementation of the Spring Security UserDetails interface, providing user detail for authentication and
+ * authorization purposes.
+ * @author Piotr Zawada
+ * @version 0.3.0
+ */
 
 public class UserDetailsImpl implements UserDetails {
 

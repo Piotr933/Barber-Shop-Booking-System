@@ -8,6 +8,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+/**
+ * Rest Controller for handles REST requests related to the App User.
+ *
+ * @author Piotr Zawada
+ * @version 0.3.0
+ */
 
 @RestController
 public class UserController {
@@ -22,6 +28,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * It is for register new app user
+     * @param user AppUser object
+     * @return ResponseEntity containing a response with the message
+     */
     @PostMapping("/api/register")
     public ResponseEntity<Response> register(@RequestBody @Valid AppUser user) {
         Response response = new Response();

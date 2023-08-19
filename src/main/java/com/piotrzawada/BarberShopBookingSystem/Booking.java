@@ -6,6 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+/**
+ * JPA Entity
+ * @author Piotr Zawada
+ * @version 0.3.0
+ */
 @Entity
 @Data
 @AllArgsConstructor

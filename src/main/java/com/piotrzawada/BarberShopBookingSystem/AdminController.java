@@ -12,7 +12,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * Rest Controller for handles REST requests related to the Admins.
+ *
+ * @author Piotr Zawada
+ * @version 0.3.0
+ */
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
@@ -27,6 +32,14 @@ public class AdminController {
         this.bookingService = bookingService;
         this.userService = userService;
     }
+
+    /**
+     * This method is for register Admin.If AppUser object meet all required criteria, the new admin will be registered.
+     *
+     * @param user - AppUser object with Admin Details
+     * @return Response Entity with response message and status.
+     *
+     */
 
     @PostMapping("/register/3{}343d863reg--s")
     public ResponseEntity<Response> register(@RequestBody AppUser user) {
@@ -58,6 +71,16 @@ public class AdminController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    /**
+     * This method is to for adding new available slots for booking.The admin need to provide the number of days that
+     * needs to be added.
+     * Currently, the bookings slots are adding only Monday to Friday: 9-18  every 30 minutes.
+     * Price for the booking by default has been set at 20.
+     *
+     * @param days int parameter that represents number of days to be added
+     * @return Response Entity with message and Http Status.
+     */
 
     @PostMapping ("/add")
     public ResponseEntity<Response> addEmptyBookingSlotsFor(@RequestParam int days ) {
@@ -93,6 +116,12 @@ public class AdminController {
         response.setMessage("Booking Slots has been updated: " + updatedSlots);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    /**
+     * This method is for display all users bookings.
+     * @param userDetails represents the user who submit the request
+     * @return Response entity with map of bookings and Http status.
+     */
     @GetMapping("/usersBookings")
     public ResponseEntity<?> userBookings(@AuthenticationPrincipal UserDetails userDetails) {
         List<Booking> bookings = bookingService.allBooked();
@@ -104,6 +133,12 @@ public class AdminController {
 
         return new ResponseEntity<>(bookingsMap, HttpStatus.OK);
     }
+
+    /**
+     * This method is for cancel user bookings
+     * @param ldt - String parameter that represent the date.
+     * @return Response Entity with message and Http status
+     */
     @PutMapping ("/cancelBooking")
     public ResponseEntity<Response> cancelBookingByDataTime (@RequestParam String ldt) {
         LocalDateTime localDateTime = LocalDateTime.parse(ldt);

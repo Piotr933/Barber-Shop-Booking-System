@@ -2,10 +2,14 @@ package com.piotrzawada.BarberShopBookingSystem;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The UserService class offers a complete interface for User entity management, handling CRUD operations
+ * @author Piotr Zawada
+ * @version 0.3.0
+ */
 @Service
 @AllArgsConstructor
 public class UserService {

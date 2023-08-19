@@ -6,12 +6,25 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of the Spring Security UserDetailsService interface, responsible for loading user details based on
+ * their username (email)
+ * @author Piotr Zawada
+ * @version 0.3.0
+ */
 @Service
 @AllArgsConstructor
 public class BookingUserDetailsService implements UserDetailsService {
 
     private final UserRepo userRepo;
 
+    /**
+     * Loads user details from the user repository based on the provided username (email)
+     *
+     * @param username username The username (email) of the user for whom details are to be loaded.
+     * @return  An instance of UserDetails
+     * @throws UsernameNotFoundException  If no user is found with the provided username.
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AppUser user = userRepo.findByEmail(username);

@@ -6,10 +6,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+/**
+ * Rest Controller for handles REST requests related to the Bookings.
+ *
+ * @author Piotr Zawada
+ * @version 0.3.0
+ */
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -25,6 +30,13 @@ public class BookingController {
     public BookingController(BookingService bookingService) {
         this.bookingService = bookingService;
     }
+
+    /**
+     * Book visit in a Barber
+     * @param userDetails - represents the user who make the appointment
+     * @param localDateTime - String value of date and time of appointment
+     * @return Response Entity with message and Http Status.
+     */
 
     @PutMapping("/book")
     public ResponseEntity<Response> bookVisit(@AuthenticationPrincipal UserDetails userDetails,
@@ -51,6 +63,13 @@ public class BookingController {
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    /**
+     * Cancel booking by user
+     * @param userDetails  represents the user who want to cancel appointment.
+     * @param ldt String value of date and time of cancelling appointment
+     * @return Response Entity with message and Http Status.
+     */
 
     @PutMapping("/cancel")
     public ResponseEntity<Response> cancelVisit(@AuthenticationPrincipal UserDetails userDetails,
@@ -79,6 +98,12 @@ public class BookingController {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Display all user bookings
+     * @param userDetails represents the user
+     * @return Response Entity with list of user bookings and Http Status
+     */
+
     @GetMapping("/myBookings")
     public ResponseEntity<?> myBookings(@AuthenticationPrincipal UserDetails userDetails) {
         AppUser appUser = userService.getByEmail(userDetails.getUsername());
@@ -89,6 +114,11 @@ public class BookingController {
         return new ResponseEntity<>(myBookings, HttpStatus.OK);
     }
 
+    /**
+     * Display the time slots available to book by date
+     * @param date String value with date
+     * @return Response Entity with list of available times and Http Status
+     */
     @GetMapping("/availableTimes")
     public ResponseEntity<?> getAvailableSlots(@RequestParam String date) {
         LocalDate localDate = LocalDate.parse(date);

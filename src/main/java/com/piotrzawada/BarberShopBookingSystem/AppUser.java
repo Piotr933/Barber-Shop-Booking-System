@@ -8,6 +8,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
 
+/**
+ * JPA Entity
+ * @author Piotr Zawada
+ * @version 0.3.0
+ */
 @Entity
 @Data
 @NoArgsConstructor
