@@ -20,16 +20,15 @@ Piotr Zawada
 
 ## Version History
 
+* 0.3.0  - 19.08.2023
 * 0.2.1  - 07.08.2023
 * 0.2.0  - 30.07.2023
 * 0.1.1  - 02.05.2023
 * 0.1.0  - 21.03.2023
 
-## What's new in 0.2.1 Version:
+## What's new in 0.3.0 Version:
 
-   * The bug has been fixed when user was able to see available booking slots in the same day and in the past
-   * The database has been connected to an in memory for testing  purposes 
-   * The code style has been improved.
+* Added Javadoc comment to improve code documentation
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
