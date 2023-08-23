@@ -3,10 +3,9 @@ package com.piotrzawada.BarberShopBookingSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -119,11 +118,10 @@ public class AdminController {
 
     /**
      * This method is for display all users bookings.
-     * @param userDetails represents the user who submit the request
      * @return Response entity with map of bookings and Http status.
      */
     @GetMapping("/usersBookings")
-    public ResponseEntity<?> userBookings(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<?> userBookings() {
         List<Booking> bookings = bookingService.allBooked();
         HashMap<String, String> bookingsMap= new HashMap<>();
 
