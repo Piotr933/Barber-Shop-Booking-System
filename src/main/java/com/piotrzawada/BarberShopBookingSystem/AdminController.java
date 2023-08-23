@@ -141,9 +141,16 @@ public class AdminController {
     public ResponseEntity<Response> cancelBookingByDataTime (@RequestParam String ldt) {
         LocalDateTime localDateTime = LocalDateTime.parse(ldt);
         Booking booking = bookingService.getByDataTime(localDateTime);
+        Response response = new Response();
+
+        if (booking.getAppUser() == null) {
+            response.setMessage("There is not appointment booked on this date and time");
+
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
         booking.setAppUser(null);
         bookingService.saveBooking(booking);
-        Response response = new Response();
         response.setMessage("Booking Cancelled");
 
         return new ResponseEntity<>(response, HttpStatus.OK);
