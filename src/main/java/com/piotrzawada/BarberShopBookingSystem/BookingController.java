@@ -86,6 +86,13 @@ public class BookingController {
         }
 
         if (booking.getAppUser().email.equals(userDetails.getUsername())) {
+
+            if (booking.localDateTime.isBefore(LocalDateTime.now().plusHours(24))){
+                response.setMessage("You cannot cancel the booking.Please note that all cancellations needs to be " +
+                        "requested at least 24 hours in advance.");
+
+                return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+            }
             booking.setAppUser(null);
             bookingService.saveBooking(booking);
             response.setMessage("Your Booking has been cancelled");
