@@ -1,11 +1,10 @@
 package com.piotrzawada.BarberShopBookingSystem;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,19 +17,16 @@ import java.util.List;
  * @version 0.3.0
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/admin")
 public class AdminController {
 
     BookingService bookingService;
+
     UserService userService;
-    @Autowired
+
     PasswordEncoder encoder;
 
-    @Autowired
-    public AdminController(BookingService bookingService, UserService userService) {
-        this.bookingService = bookingService;
-        this.userService = userService;
-    }
 
     /**
      * This method is for register Admin.If AppUser object meet all required criteria, the new admin will be registered.

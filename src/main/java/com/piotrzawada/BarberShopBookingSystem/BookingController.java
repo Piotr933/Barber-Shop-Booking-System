@@ -1,6 +1,6 @@
 package com.piotrzawada.BarberShopBookingSystem;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,19 +17,13 @@ import java.util.List;
  */
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/bookings")
 public class BookingController {
 
     BookingService bookingService;
 
-    @Autowired
     UserService userService;
-
-
-    @Autowired
-    public BookingController(BookingService bookingService) {
-        this.bookingService = bookingService;
-    }
 
     /**
      * Book visit in a Barber

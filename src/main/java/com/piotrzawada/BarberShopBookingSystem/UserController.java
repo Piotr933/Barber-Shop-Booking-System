@@ -1,7 +1,7 @@
 package com.piotrzawada.BarberShopBookingSystem;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,17 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
+@AllArgsConstructor
 public class UserController {
-    @Autowired
+
     private final UserService userService;
 
-    @Autowired
     PasswordEncoder encoder;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     /**
      * It is for register new app user
