@@ -19,17 +19,17 @@ https://github.com/Piotr933/Barber-Shop-Booking-System.git
 Piotr Zawada
 
 ## Version History
-
+* 0.3.1  - 26.08.2023
 * 0.3.0  - 19.08.2023
 * 0.2.1  - 07.08.2023
 * 0.2.0  - 30.07.2023
 * 0.1.1  - 02.05.2023
 * 0.1.0  - 21.03.2023
 
-## What's new in 0.3.0 Version:
+## What's new in 0.3.1 Version:
 
-* Added Javadoc comment to improve code documentation
-
+* Code Style improvements by refactor the code
+* User Bookings: All Booking cancellations needs to be done at least 24 hours in advance.
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
