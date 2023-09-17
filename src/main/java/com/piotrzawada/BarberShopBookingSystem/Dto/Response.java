@@ -1,4 +1,4 @@
-package com.piotrzawada.BarberShopBookingSystem;
+package com.piotrzawada.BarberShopBookingSystem.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

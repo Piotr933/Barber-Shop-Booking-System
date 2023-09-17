@@ -1,5 +1,6 @@
-package com.piotrzawada.BarberShopBookingSystem;
+package com.piotrzawada.BarberShopBookingSystem.Security;
 
+import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

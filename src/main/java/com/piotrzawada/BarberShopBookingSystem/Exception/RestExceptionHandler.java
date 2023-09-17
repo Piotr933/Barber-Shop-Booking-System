@@ -1,5 +1,6 @@
-package com.piotrzawada.BarberShopBookingSystem;
+package com.piotrzawada.BarberShopBookingSystem.Exception;
 
+import com.piotrzawada.BarberShopBookingSystem.Dto.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

@@ -1,5 +1,10 @@
-package com.piotrzawada.BarberShopBookingSystem;
+package com.piotrzawada.BarberShopBookingSystem.Controllers;
 
+import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
+import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
+import com.piotrzawada.BarberShopBookingSystem.Dto.Response;
+import com.piotrzawada.BarberShopBookingSystem.Services.BookingService;
+import com.piotrzawada.BarberShopBookingSystem.Services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

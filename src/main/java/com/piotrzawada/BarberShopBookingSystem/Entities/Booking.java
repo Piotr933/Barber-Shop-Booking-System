@@ -1,10 +1,11 @@
-package com.piotrzawada.BarberShopBookingSystem;
+package com.piotrzawada.BarberShopBookingSystem.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 /**
  * JPA Entity
@@ -20,14 +21,14 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
-    Long id;
+    public Long id;
 
-    LocalDateTime localDateTime;
-    double price;
+    public LocalDateTime localDateTime;
+    public double price;
 
     @JsonIgnore
     @ManyToOne
-    AppUser appUser;
+    public AppUser appUser;
 
     public Booking(LocalDateTime localDateTime, double price) {
         this.localDateTime = localDateTime;

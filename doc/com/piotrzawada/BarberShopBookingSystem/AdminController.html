@@ -72,7 +72,7 @@ loadScripts(document, 'script');</script>
 <h1 title="Class AdminController" class="title">Class AdminController</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance">com.piotrzawada.BarberShopBookingSystem.AdminController</div>
+<div class="inheritance">com.piotrzawada.BarberShopBookingSystem.Controllers.AdminController</div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
@@ -98,7 +98,7 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.piotrzawada.BarberShopBookingSystem.BookingService,com.piotrzawada.BarberShopBookingSystem.UserService)" class="member-name-link">AdminController</a><wbr>(<a href="BookingService.html" title="class in com.piotrzawada.BarberShopBookingSystem">BookingService</a>&nbsp;bookingService,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.piotrzawada.BarberShopBookingSystem.Services.BookingService,com.piotrzawada.BarberShopBookingSystem.Services.UserService)" class="member-name-link">AdminController</a><wbr>(<a href="BookingService.html" title="class in com.piotrzawada.BarberShopBookingSystem">BookingService</a>&nbsp;bookingService,
  <a href="UserService.html" title="class in com.piotrzawada.BarberShopBookingSystem">UserService</a>&nbsp;userService)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -127,7 +127,7 @@ loadScripts(document, 'script');</script>
 <div class="block">This method is for cancel user bookings</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.springframework.http.ResponseEntity&lt;<a href="Response.html" title="class in com.piotrzawada.BarberShopBookingSystem">Response</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#register(com.piotrzawada.BarberShopBookingSystem.AppUser)" class="member-name-link">register</a><wbr>(<a href="AppUser.html" title="class in com.piotrzawada.BarberShopBookingSystem">AppUser</a>&nbsp;user)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#register(com.piotrzawada.BarberShopBookingSystem.Entities.AppUser)" class="member-name-link">register</a><wbr>(<a href="AppUser.html" title="class in com.piotrzawada.BarberShopBookingSystem">AppUser</a>&nbsp;user)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">This method is for register Admin.If AppUser object meet all required criteria, the new admin will be registered.</div>
 </div>
@@ -154,7 +154,7 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(com.piotrzawada.BarberShopBookingSystem.BookingService,com.piotrzawada.BarberShopBookingSystem.UserService)">
+<section class="detail" id="&lt;init&gt;(com.piotrzawada.BarberShopBookingSystem.Services.BookingService,com.piotrzawada.BarberShopBookingSystem.Services.UserService)">
 <h3>AdminController</h3>
 <div class="member-signature"><span class="annotations">@Autowired
 </span><span class="modifiers">public</span>&nbsp;<span class="element-name">AdminController</span><wbr><span class="parameters">(<a href="BookingService.html" title="class in com.piotrzawada.BarberShopBookingSystem">BookingService</a>&nbsp;bookingService,
@@ -170,7 +170,7 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="register(com.piotrzawada.BarberShopBookingSystem.AppUser)">
+<section class="detail" id="register(com.piotrzawada.BarberShopBookingSystem.Entities.AppUser)">
 <h3>register</h3>
 <div class="member-signature"><span class="annotations">@PostMapping("/register/3{}343d863reg--s")
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">org.springframework.http.ResponseEntity&lt;<a href="Response.html" title="class in com.piotrzawada.BarberShopBookingSystem">Response</a>&gt;</span>&nbsp;<span class="element-name">register</span><wbr><span class="parameters">(@RequestBody

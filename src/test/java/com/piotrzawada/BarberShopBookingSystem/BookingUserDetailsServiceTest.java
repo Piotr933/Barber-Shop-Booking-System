@@ -1,5 +1,9 @@
 package com.piotrzawada.BarberShopBookingSystem;
 
+import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
+import com.piotrzawada.BarberShopBookingSystem.Repositories.UserRepo;
+import com.piotrzawada.BarberShopBookingSystem.Security.UserDetailsImpl;
+import com.piotrzawada.BarberShopBookingSystem.Services.BookingUserDetailsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

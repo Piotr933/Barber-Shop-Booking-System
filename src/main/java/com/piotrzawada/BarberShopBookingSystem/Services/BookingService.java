@@ -1,5 +1,7 @@
-package com.piotrzawada.BarberShopBookingSystem;
+package com.piotrzawada.BarberShopBookingSystem.Services;
 
+import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
+import com.piotrzawada.BarberShopBookingSystem.Repositories.BookingRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;

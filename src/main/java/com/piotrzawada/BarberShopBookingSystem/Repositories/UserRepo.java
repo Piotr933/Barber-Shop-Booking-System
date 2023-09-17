@@ -1,7 +1,7 @@
-package com.piotrzawada.BarberShopBookingSystem;
+package com.piotrzawada.BarberShopBookingSystem.Repositories;
 
+import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
 import org.springframework.data.repository.CrudRepository;
-
 import java.util.List;
 
 /**
