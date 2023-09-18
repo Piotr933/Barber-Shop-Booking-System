@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * The UserService class offers a complete interface for User entity management, handling CRUD operations
  * @author Piotr Zawada
- * @version 0.3.0
+ * @version 1.0.0
  */
 @Service
 @AllArgsConstructor

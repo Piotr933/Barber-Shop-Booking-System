@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * JPA Entity
  * @author Piotr Zawada
- * @version 0.3.0
+ * @version 1.0.0
  */
 @Entity
 @Data

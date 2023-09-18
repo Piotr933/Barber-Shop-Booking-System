@@ -13,7 +13,7 @@ import java.util.Optional;
 /**
  * The BookingService class offers a complete interface for Booking entity management, handling CRUD operations
  * @author Piotr Zawada
- * @version 0.3.0
+ * @version 1.0.0
  */
 @Service
 @AllArgsConstructor

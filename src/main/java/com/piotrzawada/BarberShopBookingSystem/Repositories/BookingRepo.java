@@ -12,7 +12,7 @@ import java.util.List;
  * in the database. It extends the CrudRepository.
  *
  * @author Piotr Zawada
- * @version 0.3.0
+ * @version 1.0.0
  */
 public interface BookingRepo extends CrudRepository<Booking, Long> {
 

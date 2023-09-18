@@ -19,7 +19,7 @@ import java.util.List;
  * Rest Controller for handles REST requests related to the Admins.
  *
  * @author Piotr Zawada
- * @version 0.3.0
+ * @version 1.0.0
  */
 @RestController
 @AllArgsConstructor
