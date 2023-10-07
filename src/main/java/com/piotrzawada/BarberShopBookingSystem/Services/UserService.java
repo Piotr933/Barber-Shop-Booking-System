@@ -18,8 +18,8 @@ public class UserService {
 
     private final UserRepo userRepo;
 
-    public void registerUser(AppUser user) {
-        userRepo.save(user);
+    public AppUser registerUser(AppUser user) {
+        return userRepo.save(user);
     }
 
     public boolean userExist(String email) {
