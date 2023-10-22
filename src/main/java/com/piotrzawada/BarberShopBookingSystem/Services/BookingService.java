@@ -61,8 +61,8 @@ public class BookingService {
      * Saves provided booking in the database.
      * @param booking Booking object
      */
-    public void saveBooking(Booking booking) {
-        bookingRepo.save(booking);
+    public Booking saveBooking(Booking booking) {
+        return bookingRepo.save(booking);
     }
 
     /**
