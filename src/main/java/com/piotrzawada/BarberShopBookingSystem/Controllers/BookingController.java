@@ -81,7 +81,7 @@ public class BookingController {
         if (booking.getAppUser() == null) {
             response.setMessage("There is not existing bookings of that data and time");
 
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
 
         if (booking.getAppUser().email.equals(userDetails.getUsername())) {
