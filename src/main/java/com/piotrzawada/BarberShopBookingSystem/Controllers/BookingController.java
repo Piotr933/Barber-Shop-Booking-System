@@ -114,8 +114,11 @@ public class BookingController {
     public ResponseEntity<?> myBookings(@AuthenticationPrincipal UserDetails userDetails) {
         AppUser appUser = userService.getByEmail(userDetails.getUsername());
         List<Booking> myBookings = appUser.booking;
+        Response response = new Response();
+
         if (myBookings.isEmpty()) {
-            return new ResponseEntity<>("You didn't book any visit yet", HttpStatus.NO_CONTENT);
+            response.setMessage("You didn't book any visit yet");
+            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(myBookings, HttpStatus.OK);
     }
@@ -130,7 +133,10 @@ public class BookingController {
         LocalDate localDate = LocalDate.parse(date);
 
         if (localDate.isBefore(LocalDate.now()) || localDate.equals(LocalDate.now())) {
-            return new ResponseEntity<>("Wrong date has been chosen", HttpStatus.BAD_REQUEST);
+            Response response = new Response();
+            response.setMessage("Wrong date has been chosen");
+
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(bookingService.availableByDate(localDate), HttpStatus.OK);
     }
