@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
-
 /**
  * The BookingService class offers a complete interface for Booking entity management, handling CRUD operations
  * @author Piotr Zawada

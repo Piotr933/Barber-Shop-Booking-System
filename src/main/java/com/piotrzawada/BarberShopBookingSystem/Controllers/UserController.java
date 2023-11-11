@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Piotr Zawada
  * @version 1.0.0
  */
-
 @RestController
 @AllArgsConstructor
 public class UserController {

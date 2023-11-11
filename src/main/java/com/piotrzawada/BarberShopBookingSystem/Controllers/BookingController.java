@@ -73,7 +73,6 @@ public class BookingController {
     @PutMapping("/cancel")
     public ResponseEntity<Response> cancelVisit(@AuthenticationPrincipal UserDetails userDetails,
                                                 @RequestParam String ldt) {
-
         LocalDateTime localDateTime = LocalDateTime.parse(ldt);
         Booking booking = bookingService.getByDataTime(localDateTime);
         Response response = new Response();

@@ -32,7 +32,6 @@ public class AdminController {
 
     PasswordEncoder encoder;
 
-
     /**
      * This method is for register Admin.If AppUser object meet all required criteria, the new admin will be registered.
      *
@@ -51,7 +50,6 @@ public class AdminController {
         if (userService.usersByRole("ROLE_ADMIN").size() >= limitOfAdmins) {
             response.setMessage("Register Admin failed: Limit of admins has been reached");
             return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
-
         }
 
         if (!adminUsers.contains(user.nickname)) {
