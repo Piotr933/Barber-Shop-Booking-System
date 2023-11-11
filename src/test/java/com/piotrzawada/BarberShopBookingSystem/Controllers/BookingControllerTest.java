@@ -79,9 +79,10 @@ class BookingControllerTest {
     }
 
     @Test
-    void BookingController_bookVisit_statusOK() throws Exception {
+    void BookingController_bookVisit_ReturnOK() throws Exception {
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
+
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
         given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking);
 
@@ -97,12 +98,12 @@ class BookingControllerTest {
     }
 
     @Test
-    void BookingController_bookVisit_statusBadRequest() throws Exception {
+    void BookingController_bookVisit_ReturnBadRequest() throws Exception {
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
+
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
         given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(null);
-
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/bookings/book")
                 .param("localDateTime", "2026-09-20T22:30")
@@ -115,12 +116,13 @@ class BookingControllerTest {
     }
 
     @Test
-    void BookingController_bookVisit_statusBadRequest2() throws Exception {
+    void BookingController_bookVisit_ReturnBadRequest2() throws Exception {
+
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
+
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
         given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking3);
-
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/bookings/book")
                 .param("localDateTime", "2026-11-04T10:30")
@@ -133,9 +135,10 @@ class BookingControllerTest {
     }
 
     @Test
-    void BookingController_cancelVisit_statusOk() throws Exception {
+    void BookingController_cancelVisit_returnOk() throws Exception {
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
+
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
         given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking3);
 
@@ -151,9 +154,10 @@ class BookingControllerTest {
     }
 
     @Test
-    void BookingController_cancelVisit_statusNOT_FOUND() throws Exception {
+    void BookingController_cancelVisit_returnNOT_FOUND() throws Exception {
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
+
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
         given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking2);
 
@@ -168,20 +172,21 @@ class BookingControllerTest {
     }
 
     @Test
-    void BookingController_cancelVisit_statusBAD_REQUEST() throws Exception {
+    void BookingController_cancelVisit_returnBAD_REQUEST() throws Exception {
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
-        Booking booking4 = Booking.builder()
-                .localDateTime(LocalDateTime.now().minusHours(2))
-                .appUser(appUser).build();
+
+        booking3.setLocalDateTime(LocalDateTime.now().minusHours(2));
+        booking3.setAppUser(appUser);
+
 
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
-        given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking4);
+        given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking3);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/bookings/cancel")
                 .param("ldt", "2026-11-04T10:00")
                 .contentType(MediaType.APPLICATION_JSON)
-                .contentType(objectMapper.writeValueAsString(booking4)));
+                .contentType(objectMapper.writeValueAsString(booking3)));
 
 
         resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest())
@@ -189,7 +194,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void BookingController_myBookings_statusOK() throws Exception {
+    void BookingController_myBookings_returnOK() throws Exception {
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(auth);
@@ -205,10 +210,10 @@ class BookingControllerTest {
     }
 
     @Test
-    void BookingController_myBookings_statusNO_CONTENT() throws Exception {
+    void BookingController_myBookings_returnNO_CONTENT() throws Exception {
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
-
         SecurityContextHolder.getContext().setAuthentication(auth);
+
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
         List<Booking> bookingList = new ArrayList<>();
         appUser.setBooking(bookingList);
@@ -220,7 +225,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void BookingController_getAvailableSlots_statusOK() throws Exception {
+    void BookingController_getAvailableSlots_returnOK() throws Exception {
         String date = "2027-11-22";
         List<Booking> bookingList = List.of(booking, booking2);
 
@@ -236,7 +241,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void BookingController_getAvailableSlots_statusBAD_REQUEST() throws Exception {
+    void BookingController_getAvailableSlots_returnBAD_REQUEST() throws Exception {
         String date = "2020-11-22";
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/bookings/availableTimes")

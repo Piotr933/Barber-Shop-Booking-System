@@ -80,7 +80,7 @@ class AdminControllerTest {
                 .appUser(appUser)
                 .build();
         booking2 =  Booking.builder()
-                .localDateTime(LocalDateTime.of(2026, 11, 4, 10, 00))
+                .localDateTime(LocalDateTime.of(2026, 11, 4, 10,0))
                 .appUser(appUser)
                 .build();
     }
@@ -88,6 +88,7 @@ class AdminControllerTest {
     @Test
     void adminController_register_returnOK() throws Exception {
         given(userService.registerUser(ArgumentMatchers.any())).willReturn(admin);
+
         ResultActions resultActions = mockMvc.perform(post("/api/admin/register/3{}343d863reg--s")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(admin)));
@@ -100,9 +101,11 @@ class AdminControllerTest {
     @Test
     void adminController_register_returnUNAUTHORIZED() throws Exception {
         given(userService.usersByRole(ArgumentMatchers.any())).willReturn(List.of(admin, admin2, admin3));
+
         ResultActions resultActions = mockMvc.perform(post("/api/admin/register/3{}343d863reg--s")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(admin)));
+
         resultActions.andExpect(MockMvcResultMatchers.status().isUnauthorized())
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Register Admin failed: Limit of admins has been reached\"}"));
     }
@@ -112,6 +115,7 @@ class AdminControllerTest {
         ResultActions resultActions = mockMvc.perform(post("/api/admin/register/3{}343d863reg--s")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(appUser)));
+
         resultActions.andExpect(MockMvcResultMatchers.status().isUnauthorized())
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Register Admin failed: Wrong credentials\"}"));
     }
@@ -119,9 +123,11 @@ class AdminControllerTest {
     @Test
     void adminController_register_returnBAD_REQUEST() throws Exception {
         given(userService.userExist(ArgumentMatchers.any())).willReturn(true);
+
         ResultActions resultActions = mockMvc.perform(post("/api/admin/register/3{}343d863reg--s")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(admin)));
+
         resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Register Admin failed: The email address is registered already\"}"));
     }
@@ -163,9 +169,7 @@ class AdminControllerTest {
 
     @Test
     void adminController_cancelBookingByDataTime_returnOK() throws Exception {
-        Booking responseBooking = booking;
-
-        given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(responseBooking);
+        given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking);
 
         ResultActions resultActions = mockMvc.perform(put("/api/admin/cancelBooking")
                 .param("ldt", "2026-09-20T12:30")
@@ -177,10 +181,9 @@ class AdminControllerTest {
 
     @Test
     void adminController_cancelBookingByDataTime_returnBad_Request() throws Exception {
-        Booking responseBooking = booking;
-        responseBooking.setAppUser(null);
+        booking.setAppUser(null);
 
-        given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(responseBooking);
+        given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking);
 
         ResultActions resultActions = mockMvc.perform(put("/api/admin/cancelBooking")
                 .param("ldt", "2026-09-20T12:30")

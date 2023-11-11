@@ -4,16 +4,15 @@ import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
 import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
 import com.piotrzawada.BarberShopBookingSystem.Repositories.BookingRepo;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,30 +24,38 @@ class BookingServiceTest {
     @InjectMocks
     BookingService bookingService;
 
-    private final AppUser appUser = AppUser.builder()
-            .nickname("Adam")
-            .email("adam443243433@gmail.com")
-            .role("ROLE_USER")
-            .password("Password123#")
-            .build();
+    private AppUser appUser;
 
-    private final Booking booking = Booking.builder()
-            .localDateTime(LocalDateTime.of(2026, 9, 20, 12, 30))
-            .appUser(appUser)
-            .build();
+    private Booking booking, booking2, booking3, booking4;
 
-    private final Booking booking2 = Booking.builder()
-            .localDateTime(LocalDateTime.of(2026, 9, 20, 13, 0))
-            .build();
+    @BeforeEach
+    public void init() {
+        appUser = AppUser.builder()
+                .nickname("Adam")
+                .email("adam443243433@gmail.com")
+                .role("ROLE_USER")
+                .password("Password123#")
+                .build();
 
-    private final Booking booking3 = Booking.builder()
-            .localDateTime( LocalDateTime.of(2026, 12, 11, 11, 0))
-            .build();
-    private final Booking booking4 = Booking.builder()
-            .localDateTime(LocalDateTime.of(2026, 10, 2, 13, 30))
-            .price(20)
-            .appUser(appUser)
-            .build();
+        booking = Booking.builder()
+                .localDateTime(LocalDateTime.of(2026, 9, 20, 12, 30))
+                .appUser(appUser)
+                .build();
+
+        booking2 = Booking.builder()
+                .localDateTime(LocalDateTime.of(2026, 9, 20, 13, 0))
+                .build();
+
+        booking3 = Booking.builder()
+                .localDateTime( LocalDateTime.of(2026, 12, 11, 11, 0))
+                .build();
+        booking4 = Booking.builder()
+                .localDateTime(LocalDateTime.of(2026, 10, 2, 13, 30))
+                .price(20)
+                .appUser(appUser)
+                .build();
+
+    }
 
 
     @Test

@@ -66,7 +66,6 @@ class UserControllerTest {
     }
     @Test
     void userController_register_returnConflict() throws Exception {
-
         given(userService.userExist(ArgumentMatchers.any())).willReturn(true);
         given(userService.registerUser(ArgumentMatchers.any())).willReturn(appUser);
 

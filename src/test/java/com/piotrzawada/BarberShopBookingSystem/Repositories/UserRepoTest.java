@@ -2,6 +2,7 @@ package com.piotrzawada.BarberShopBookingSystem.Repositories;
 
 import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -17,20 +18,26 @@ class UserRepoTest {
     @Autowired
     private UserRepo userRepo;
 
-    private final AppUser appUser = AppUser.builder()
-            .nickname("Adam")
-            .email("adam443243433@gmail.com")
-            .role("ROLE_USER")
-            .password("Password123#")
-            .build();
-    private final AppUser appUser1 = AppUser.builder()
-            .nickname("Aoife")
-            .role("ROLE_USER")
-            .build();
-    private final AppUser admin = AppUser.builder()
-            .nickname("AdminBooking1")
-            .role("ROLE_ADMIN")
-            .build();
+    private AppUser appUser, appUser1, admin;
+
+
+    @BeforeEach
+    public void init() {
+         appUser = AppUser.builder()
+                 .nickname("Adam")
+                .email("adam443243433@gmail.com")
+                .role("ROLE_USER")
+                .password("Password123#")
+                .build();
+         appUser1 = AppUser.builder()
+                .nickname("Aoife")
+                .role("ROLE_USER")
+                .build();
+         admin = AppUser.builder()
+                .nickname("AdminBooking1")
+                .role("ROLE_ADMIN")
+                .build();
+    }
 
     @Test
     void userRepo_Save_ReturnAppUser() {
@@ -70,7 +77,7 @@ class UserRepoTest {
         Assertions.assertEquals("Adam", userRepo.findByEmail("adam443243433@gmail.com").getNickname());
     }
     @Test
-    void userRepo_findAllByRole_returnListOfAppUsers(){
+    void userRepo_findAllByRole_returnListOfAppUsers() {
         userRepo.save(appUser);
         userRepo.save(appUser1);
         userRepo.save(admin);

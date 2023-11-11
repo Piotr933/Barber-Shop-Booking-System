@@ -3,6 +3,7 @@ package com.piotrzawada.BarberShopBookingSystem.Repositories;
 import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
 import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -22,28 +23,38 @@ class BookingRepoTest {
     @Autowired
     private UserRepo userRepo;
 
-    private final AppUser appUser = AppUser.builder()
-            .nickname("Adam")
-            .build();
+    private AppUser appUser;
 
-    private final Booking booking = Booking.builder()
-            .localDateTime(LocalDateTime.of(2026, 9, 20, 12, 30))
-            .price(20)
-            .build();
+    private Booking booking, booking2, booking3, booking4;
 
-    private final Booking booking2 = Booking.builder()
-            .localDateTime(LocalDateTime.of(2026, 11, 23, 13, 0))
-            .appUser(appUser)
-            .price(20)
-            .build();
 
-    private final Booking booking3 = Booking.builder()
-            .localDateTime( LocalDateTime.of(2026, 12, 11, 11, 0))
-            .appUser(appUser)
-            .build();
-    private final Booking booking4 = Booking.builder()
-            .localDateTime(LocalDateTime.of(2026, 10, 2, 13, 30))
-            .build();
+    @BeforeEach
+    public void init() {
+        appUser = AppUser.builder()
+                .nickname("Adam")
+                .build();
+
+        booking = Booking.builder()
+                .localDateTime(LocalDateTime.of(2026, 9, 20, 12, 30))
+                .price(20)
+                .build();
+
+        booking2 = Booking.builder()
+                .localDateTime(LocalDateTime.of(2026, 11, 23, 13, 0))
+                .appUser(appUser)
+                .price(20)
+                .build();
+
+        booking3 = Booking.builder()
+                .localDateTime( LocalDateTime.of(2026, 12, 11, 11, 0))
+                .appUser(appUser)
+                .build();
+
+        booking4 = Booking.builder()
+                .localDateTime(LocalDateTime.of(2026, 10, 2, 13, 30))
+                .build();
+
+    }
 
 
     @Test

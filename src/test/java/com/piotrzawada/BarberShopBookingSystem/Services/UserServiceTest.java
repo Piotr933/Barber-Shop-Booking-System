@@ -19,12 +19,18 @@ class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
-    private final AppUser appUser = AppUser.builder()
-            .nickname("Adam")
-            .email("adam443243433@gmail.com")
-            .role("ROLE_USER")
-            .password("Password123#")
-            .build();
+    private AppUser appUser;
+
+    public void init() {
+        appUser = AppUser.builder()
+                .nickname("Adam")
+                .email("adam443243433@gmail.com")
+                .role("ROLE_USER")
+                .password("Password123#")
+                .build();
+    }
+
+
 
     @Test
     void userService_userExist_returnTrue() {
