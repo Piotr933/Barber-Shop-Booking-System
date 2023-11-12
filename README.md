@@ -5,7 +5,7 @@ The "Barber Shop Booking System" is a REST API project that aims to streamline t
 
 ## Technologies
 
-The "Barber Shop Booking System" is a REST API project developed using Java 17 and Spring Boot 3.0.2. It uses Gradle for dependency management and an H2 database for data storage. The project incorporates Spring Actuator for monitoring and management, Spring Data JPA for database interactions, and Spring Security for authentication and authorization. It also uses Spring Validation for data validation, Lombok for reducing boilerplate code, and JUnit and Mockito for unit testing. Overall, this project demonstrates a range of powerful and popular technologies for Java back-end development.
+The "Barber Shop Booking System" is a REST API project developed using Java 17 and Spring Boot 3.0.2. It uses Gradle for dependency management and an H2 database for data storage. The project incorporates Spring Data JPA for database interactions, Spring Security for authentication and authorization, Spring Validation for data validation, Lombok for reducing boilerplate code, and JUnit and Mockito for unit testing. Overall, this project demonstrates a range of powerful and popular technologies for Java back-end development.
 
 ## Tools
 * IntelliJ IDA
@@ -19,17 +19,8 @@ https://github.com/Piotr933/Barber-Shop-Booking-System.git
 Piotr Zawada
 
 ## Version History
-* 0.3.1  - 26.08.2023
-* 0.3.0  - 19.08.2023
-* 0.2.1  - 07.08.2023
-* 0.2.0  - 30.07.2023
-* 0.1.1  - 02.05.2023
-* 0.1.0  - 21.03.2023
+* 1.0.0 
 
-## What's new in 0.3.1 Version:
-
-* Code Style improvements by refactor the code
-* User Bookings: All Booking cancellations needs to be done at least 24 hours in advance.
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
