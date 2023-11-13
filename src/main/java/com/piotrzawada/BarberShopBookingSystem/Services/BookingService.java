@@ -21,23 +21,6 @@ public class BookingService {
     private final BookingRepo bookingRepo;
 
     /**
-     * Retrieves Booking from the database by provided ID number.
-     * @param id represents booking ID
-     * @return Optional Booking object
-     */
-    public Optional<Booking> getByID(Long id) {
-        return bookingRepo.findById(id);
-    }
-
-    /**
-     * Retrieves a list of all bookings stored in the booking repository.
-     * @return A list of Booking objects representing all bookings.
-     */
-    public List<Booking> allBookings() {
-        return (List<Booking>) bookingRepo.findAll();
-    }
-
-    /**
      * Retrieves Booking from the database by provided date and time
      * @param localDateTime  Local Data Time
      * @return Booking object
@@ -45,15 +28,6 @@ public class BookingService {
 
     public Booking getByDataTime(LocalDateTime localDateTime) {
         return bookingRepo.findByLocalDateTime(localDateTime);
-    }
-
-    /**
-     * Retrieves list of available time slots.
-     * @return List of Bookings object which appUser is equal null.
-     */
-
-    public List<Booking> findAvailableTimeSlots() {
-        return bookingRepo.findAllByAppUser(null);
     }
 
     /**
