@@ -1,8 +1,8 @@
 package com.piotrzawada.BarberShopBookingSystem.Controllers;
 
+import com.piotrzawada.BarberShopBookingSystem.Dto.Response;
 import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
 import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
-import com.piotrzawada.BarberShopBookingSystem.Dto.Response;
 import com.piotrzawada.BarberShopBookingSystem.Services.BookingService;
 import com.piotrzawada.BarberShopBookingSystem.Services.UserService;
 import lombok.AllArgsConstructor;
@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 /**
  * Rest Controller for handles REST requests related to the Admins.
  *
@@ -122,11 +124,9 @@ public class AdminController {
     @GetMapping("/usersBookings")
     public ResponseEntity<?> userBookings() {
         List<Booking> bookings = bookingService.allBooked();
-        HashMap<String, String> bookingsMap= new HashMap<>();
 
-        for (Booking booking : bookings) {
-            bookingsMap.put(booking.localDateTime.toString(), booking.appUser.email);
-        }
+        Map<String, String> bookingsMap = bookings.stream().collect(Collectors.toMap
+                (booking -> booking.getLocalDateTime().toString(), booking -> booking.getAppUser().getEmail()));
 
         return new ResponseEntity<>(bookingsMap, HttpStatus.OK);
     }
