@@ -60,7 +60,7 @@ public class BookingController {
 
         response.setMessage("This time is already booked");
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     /**

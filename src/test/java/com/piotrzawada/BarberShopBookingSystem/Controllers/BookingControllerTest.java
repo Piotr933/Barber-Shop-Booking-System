@@ -116,7 +116,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void BookingController_bookVisit_ReturnBadRequest2() throws Exception {
+    void BookingController_bookVisit_ReturnConflict() throws Exception {
 
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
@@ -129,7 +129,7 @@ class BookingControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(booking)));
 
-        resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest())
+        resultActions.andExpect(MockMvcResultMatchers.status().isConflict())
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"This time is already booked\"}"));
 
     }

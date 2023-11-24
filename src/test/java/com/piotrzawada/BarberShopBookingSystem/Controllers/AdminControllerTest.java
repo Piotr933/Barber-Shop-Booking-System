@@ -93,7 +93,7 @@ class AdminControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(admin)));
 
-        resultActions.andExpect(MockMvcResultMatchers.status().isOk())
+        resultActions.andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Admin successfully registered\"}"))
                 .andDo(MockMvcResultHandlers.print());
     }
@@ -121,14 +121,14 @@ class AdminControllerTest {
     }
 
     @Test
-    void adminController_register_returnBAD_REQUEST() throws Exception {
+    void adminController_register_returnCONFLICT() throws Exception {
         given(userService.userExist(ArgumentMatchers.any())).willReturn(true);
 
         ResultActions resultActions = mockMvc.perform(post("/api/admin/register/3{}343d863reg--s")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(admin)));
 
-        resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest())
+        resultActions.andExpect(MockMvcResultMatchers.status().isConflict())
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Register Admin failed: The email address is registered already\"}"));
     }
 
@@ -140,7 +140,7 @@ class AdminControllerTest {
                 .param("days", "1")
                 .contentType(MediaType.APPLICATION_JSON));
 
-        resultActions.andExpect(MockMvcResultMatchers.status().isOk())
+        resultActions.andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Booking Slots has been updated: 19\"}"));
     }
 

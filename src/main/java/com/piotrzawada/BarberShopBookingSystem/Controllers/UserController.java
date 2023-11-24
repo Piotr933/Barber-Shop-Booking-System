@@ -43,7 +43,7 @@ public class UserController {
         userService.registerUser(user);
         response.setMessage("User has been registered");
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }
 

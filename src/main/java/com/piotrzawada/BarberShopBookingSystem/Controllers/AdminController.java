@@ -61,7 +61,7 @@ public class AdminController {
 
         if (userService.userExist(user.email)) {
             response.setMessage("Register Admin failed: The email address is registered already");
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
         }
 
         user.setRole("ROLE_ADMIN");
@@ -69,7 +69,7 @@ public class AdminController {
         userService.registerUser(user);
         response.setMessage("Admin successfully registered");
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     /**
@@ -114,7 +114,7 @@ public class AdminController {
             current = current.plusDays(1);
         }
         response.setMessage("Booking Slots has been updated: " + updatedSlots);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     /**
