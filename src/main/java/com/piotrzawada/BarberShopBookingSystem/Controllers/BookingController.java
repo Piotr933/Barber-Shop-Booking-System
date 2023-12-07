@@ -18,7 +18,7 @@ import java.util.List;
  * Rest Controller for handles REST requests related to the Bookings.
  *
  * @author Piotr Zawada
- * @version 1.0.0
+ * @version 1.0.2
  */
 
 @RestController
