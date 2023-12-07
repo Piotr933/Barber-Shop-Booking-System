@@ -45,7 +45,7 @@ public class BookingController {
         Booking booking = bookingService.getByDataTime(LocalDateTime.parse(localDateTime));
 
         if (booking == null) {
-            response.setMessage("There is not Booking available at this data time");
+            response.setMessage("No booking is available at this date and time");
 
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
@@ -53,12 +53,12 @@ public class BookingController {
         if (booking.getAppUser() == null) {
             booking.setAppUser(appUser);
             bookingService.saveBooking(booking);
-            response.setMessage("Your visit has been booked");
+            response.setMessage("Your visit has been successfully booked");
 
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
 
-        response.setMessage("This time is already booked");
+        response.setMessage("This time slot is already booked");
 
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
@@ -78,7 +78,7 @@ public class BookingController {
         Response response = new Response();
 
         if (booking.getAppUser() == null) {
-            response.setMessage("There is not existing bookings of that data and time");
+            response.setMessage("No existing bookings for that date and time");
 
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
@@ -87,13 +87,13 @@ public class BookingController {
 
             if (booking.localDateTime.isBefore(LocalDateTime.now().plusHours(24))){
                 response.setMessage("You cannot cancel the booking.Please note that all cancellations needs to be " +
-                        "requested at least 24 hours in advance.");
+                        "requested at least 24 hours in advance");
 
                 return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
             }
             booking.setAppUser(null);
             bookingService.saveBooking(booking);
-            response.setMessage("Your Booking has been cancelled");
+            response.setMessage("Your booking has been successfully cancelled");
 
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
@@ -116,7 +116,7 @@ public class BookingController {
         Response response = new Response();
 
         if (myBookings.isEmpty()) {
-            response.setMessage("You didn't book any visit yet");
+            response.setMessage("You haven't booked any visits yet");
             return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(myBookings, HttpStatus.OK);

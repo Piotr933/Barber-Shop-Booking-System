@@ -35,13 +35,13 @@ public class UserController {
         Response response = new Response();
 
         if (userService.userExist(user.email)) {
-            response.setMessage("User with that username already exists.");
+            response.setMessage("A user with that username already exists");
             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
         }
         user.setRole("ROLE_USER");
         user.setPassword(encoder.encode(user.getPassword()));
         userService.registerUser(user);
-        response.setMessage("User has been registered");
+        response.setMessage("User has been successfully registered");
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

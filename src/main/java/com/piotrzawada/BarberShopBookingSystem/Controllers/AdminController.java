@@ -113,7 +113,7 @@ public class AdminController {
             }
             current = current.plusDays(1);
         }
-        response.setMessage("Booking Slots has been updated: " + updatedSlots);
+        response.setMessage("Booking slots have been updated successfully: " + updatedSlots);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -143,14 +143,14 @@ public class AdminController {
         Response response = new Response();
 
         if (booking.getAppUser() == null) {
-            response.setMessage("There is not appointment booked on this date and time");
+            response.setMessage("No appointment is booked for this date and time");
 
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
         booking.setAppUser(null);
         bookingService.saveBooking(booking);
-        response.setMessage("Booking Cancelled");
+        response.setMessage("Booking successfully cancelled");
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
