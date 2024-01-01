@@ -3,6 +3,7 @@ package com.piotrzawada.BarberShopBookingSystem.Services;
 import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
 import com.piotrzawada.BarberShopBookingSystem.Repositories.UserRepo;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,7 +21,7 @@ class UserServiceTest {
     private UserService userService;
 
     private AppUser appUser;
-
+    @BeforeEach
     public void init() {
         appUser = AppUser.builder()
                 .nickname("Adam")
