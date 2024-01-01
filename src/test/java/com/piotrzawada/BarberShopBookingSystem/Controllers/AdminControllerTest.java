@@ -141,7 +141,7 @@ class AdminControllerTest {
                 .contentType(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Booking Slots has been updated: 19\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Booking slots have been updated successfully: 19\"}"));
     }
 
     @Test
@@ -176,7 +176,7 @@ class AdminControllerTest {
                 .contentType(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Booking Cancelled\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Booking successfully cancelled\"}"));
     }
 
     @Test
@@ -190,6 +190,6 @@ class AdminControllerTest {
                 .contentType(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"There is not appointment booked on this date and time\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"No appointment is booked for this date and time\"}"));
     }
 }

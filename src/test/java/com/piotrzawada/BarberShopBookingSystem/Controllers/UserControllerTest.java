@@ -62,7 +62,7 @@ class UserControllerTest {
                 .content(objectMapper.writeValueAsString(appUser)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"User has been registered\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"User has been successfully registered\"}"));
     }
     @Test
     void userController_register_returnConflict() throws Exception {
@@ -74,6 +74,6 @@ class UserControllerTest {
                 .content(objectMapper.writeValueAsString(appUser)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isConflict())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"User with that username already exists.\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"A user with that username already exists\"}"));
     }
 }

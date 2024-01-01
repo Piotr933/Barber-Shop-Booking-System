@@ -93,7 +93,7 @@ class BookingControllerTest {
                 .content(objectMapper.writeValueAsString(booking)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Your visit has been booked\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Your visit has been successfully booked\"}"));
 
     }
 
@@ -111,7 +111,7 @@ class BookingControllerTest {
                 .content(objectMapper.writeValueAsString(booking)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"There is not Booking available at this data time\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"No booking is available at this date and time\"}"));
 
     }
 
@@ -130,7 +130,7 @@ class BookingControllerTest {
                 .content(objectMapper.writeValueAsString(booking)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isConflict())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"This time is already booked\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"This time slot is already booked\"}"));
 
     }
 
@@ -148,7 +148,7 @@ class BookingControllerTest {
                 .contentType(objectMapper.writeValueAsString(booking3)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Your Booking has been cancelled\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Your booking has been successfully cancelled\"}"));
 
         Assertions.assertNull(booking3.getAppUser());
     }
@@ -167,7 +167,7 @@ class BookingControllerTest {
                 .contentType(objectMapper.writeValueAsString(booking2)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"There is not existing bookings of that data and time\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"No existing bookings for that date and time\"}"));
 
     }
 
@@ -190,7 +190,7 @@ class BookingControllerTest {
 
 
         resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"You cannot cancel the booking.Please note that all cancellations needs to be requested at least 24 hours in advance.\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"You cannot cancel the booking.Please note that all cancellations needs to be requested at least 24 hours in advance\"}"));
     }
 
     @Test
@@ -221,7 +221,7 @@ class BookingControllerTest {
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/bookings/myBookings"));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isNoContent())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"You didn't book any visit yet\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"You haven't booked any visits yet\"}"));
     }
 
     @Test
