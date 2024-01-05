@@ -58,6 +58,10 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/api/admin/add").hasRole("ADMIN");
                     auth.requestMatchers("/api/admin/usersBookings").hasAnyRole("ADMIN");
                     auth.requestMatchers("/api/admin/cancelBooking").hasAnyRole("ADMIN");
+                    auth.requestMatchers("/api/services/all").permitAll();
+                    auth.requestMatchers("/api/services/add").hasAnyRole("ADMIN");
+                    auth.requestMatchers("/api/services/update").hasAnyRole("ADMIN");
+                    auth.requestMatchers("/api/services/delete").hasAnyRole("ADMIN");
                     auth.requestMatchers("/").permitAll();
                     auth.anyRequest().permitAll();
                 })
