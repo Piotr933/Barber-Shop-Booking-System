@@ -4,7 +4,6 @@ import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServices;
 import com.piotrzawada.BarberShopBookingSystem.Repositories.BarberServicesRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -22,7 +21,6 @@ public class BarberServices_Service {
     public BarberServices getByName(String name) {
         return  repo.findByName(name);
     }
-
     public List<BarberServices> getAllServices() {
         return repo.findAll();
     }
