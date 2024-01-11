@@ -18,6 +18,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -28,7 +30,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest(controllers = AdminController.class)
-@AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureMockMvc()
 @ExtendWith(MockitoExtension.class)
 @Import(TestSecurityConfig.class)
 class AdminControllerTest {
@@ -86,7 +88,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void adminController_register_returnOK() throws Exception {
+    void adminController_register_statusOk() throws Exception {
         given(userService.registerUser(ArgumentMatchers.any())).willReturn(admin);
 
         ResultActions resultActions = mockMvc.perform(post("/api/admin/register/3{}343d863reg--s")
@@ -94,12 +96,14 @@ class AdminControllerTest {
                 .content(objectMapper.writeValueAsString(admin)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Admin successfully registered\"}"))
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Admin successfully " +
+                        "registered\"}"))
                 .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
-    void adminController_register_returnUNAUTHORIZED() throws Exception {
+    @WithAnonymousUser
+    void adminController_register_statusUNAUTHORIZED() throws Exception {
         given(userService.usersByRole(ArgumentMatchers.any())).willReturn(List.of(admin, admin2, admin3));
 
         ResultActions resultActions = mockMvc.perform(post("/api/admin/register/3{}343d863reg--s")
@@ -107,21 +111,25 @@ class AdminControllerTest {
                 .content(objectMapper.writeValueAsString(admin)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isUnauthorized())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Register Admin failed: Limit of admins has been reached\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Register Admin failed: Limit " +
+                        "of admins has been reached\"}"));
     }
 
     @Test
-    void adminController_register_returnUNAUTHORIZED2() throws Exception {
+    @WithAnonymousUser
+    void adminController_register_statusUNAUTHORIZED2() throws Exception {
         ResultActions resultActions = mockMvc.perform(post("/api/admin/register/3{}343d863reg--s")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(appUser)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isUnauthorized())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Register Admin failed: Wrong credentials\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Register Admin failed: Wrong" +
+                        " credentials\"}"));
     }
 
     @Test
-    void adminController_register_returnCONFLICT() throws Exception {
+    @WithAnonymousUser
+    void adminController_register_statusCONFLICT() throws Exception {
         given(userService.userExist(ArgumentMatchers.any())).willReturn(true);
 
         ResultActions resultActions = mockMvc.perform(post("/api/admin/register/3{}343d863reg--s")
@@ -129,11 +137,14 @@ class AdminControllerTest {
                 .content(objectMapper.writeValueAsString(admin)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isConflict())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Register Admin failed: The email address is registered already\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Register Admin failed: The" +
+                        " email address is registered already\"}"));
     }
 
+
     @Test
-    void adminController_addEmptyBookingSlots_returnOK() throws Exception {
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    void adminController_addEmptyBookingSlots_statusOK() throws Exception {
         given(bookingService.latestDateTime()).willReturn(LocalDateTime.of(2024, 8, 2, 18,0));
 
         ResultActions resultActions = mockMvc.perform(post("/api/admin/add")
@@ -141,11 +152,38 @@ class AdminControllerTest {
                 .contentType(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Booking slots have been updated successfully: 19\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Booking slots have been" +
+                        " updated successfully: 19\"}"));
     }
 
     @Test
-    void adminController_addEmptyBookingSlots_returnBadRequest() throws Exception {
+    @WithMockUser()
+    void adminController_addEmptyBookingSlots_statusForbidden() throws Exception {
+        given(bookingService.latestDateTime()).willReturn(LocalDateTime.of(2024, 8, 2, 18,0));
+
+        ResultActions resultActions = mockMvc.perform(post("/api/admin/add")
+                .param("days", "1")
+                .contentType(MediaType.APPLICATION_JSON));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isForbidden());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void adminController_addEmptyBookingSlots_statusUnauthorized() throws Exception {
+        given(bookingService.latestDateTime()).willReturn(LocalDateTime.of(2024, 8, 2, 18,0));
+
+        ResultActions resultActions = mockMvc.perform(post("/api/admin/add")
+                .param("days", "1")
+                .contentType(MediaType.APPLICATION_JSON));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isUnauthorized());
+    }
+
+
+    @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    void adminController_addEmptyBookingSlots_statusBadRequest() throws Exception {
         given(bookingService.latestDateTime()).willReturn(LocalDateTime.of(2024, 8, 2, 18,0));
 
         ResultActions resultActions = mockMvc.perform(post("/api/admin/add")
@@ -153,22 +191,37 @@ class AdminControllerTest {
                 .contentType(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Adding new slots failed: Invalid entry. Please enter the value between 1 and 30 \"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Adding new slots failed:" +
+                        " Invalid entry. Please enter the value between 1 and 30 \"}"));
     }
 
     @Test
-    void adminController_userBookings_returnOK() throws Exception {
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    void adminController_userBookings_statusOK() throws Exception {
         given(bookingService.allBooked()).willReturn(List.of(booking, booking2));
 
         ResultActions resultActions = mockMvc.perform(get("/api/admin/usersBookings")
                 .contentType(MediaType.APPLICATION_JSON));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("{\"2026-09-20T12:30\":\"adam443243433@gmail.com\",\"2026-11-04T10:00\":\"adam443243433@gmail.com\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"2026-09-20T12:30\":" +
+                        "\"adam443243433@gmail.com\",\"2026-11-04T10:00\":\"adam443243433@gmail.com\"}"));
     }
 
     @Test
-    void adminController_cancelBookingByDataTime_returnOK() throws Exception {
+    @WithMockUser
+    void adminController_userBookings_statusForbidden() throws Exception {
+        given(bookingService.allBooked()).willReturn(List.of(booking, booking2));
+
+        ResultActions resultActions = mockMvc.perform(get("/api/admin/usersBookings")
+                .contentType(MediaType.APPLICATION_JSON));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    void adminController_cancelBookingByDataTime_statusOK() throws Exception {
         given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking);
 
         ResultActions resultActions = mockMvc.perform(put("/api/admin/cancelBooking")
@@ -180,7 +233,20 @@ class AdminControllerTest {
     }
 
     @Test
-    void adminController_cancelBookingByDataTime_returnBad_Request() throws Exception {
+    @WithMockUser
+    void adminController_cancelBookingByDataTime_statusForbidden() throws Exception {
+        given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking);
+
+        ResultActions resultActions = mockMvc.perform(put("/api/admin/cancelBooking")
+                .param("ldt", "2026-09-20T12:30")
+                .contentType(MediaType.APPLICATION_JSON));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    void adminController_cancelBookingByDataTime_statusBad_Request() throws Exception {
         booking.setAppUser(null);
 
         given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking);

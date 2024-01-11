@@ -53,7 +53,7 @@ class UserControllerTest {
     }
 
     @Test
-    void userController_register_returnCreated() throws Exception {
+    void userController_register_statusCreated() throws Exception {
         given(userService.userExist(ArgumentMatchers.any())).willReturn(false);
         given(userService.registerUser(ArgumentMatchers.any())).willReturn(appUser);
 
@@ -65,7 +65,7 @@ class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"User has been successfully registered\"}"));
     }
     @Test
-    void userController_register_returnConflict() throws Exception {
+    void userController_register_statusConflict() throws Exception {
         given(userService.userExist(ArgumentMatchers.any())).willReturn(true);
         given(userService.registerUser(ArgumentMatchers.any())).willReturn(appUser);
 

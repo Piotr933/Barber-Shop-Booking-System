@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -24,8 +25,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 import static org.mockito.BDDMockito.given;
 
-@WebMvcTest(BarberServicesController.class)
-@AutoConfigureMockMvc(addFilters = false)
+@WebMvcTest(controllers = BarberServicesController.class)
+@AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
 @Import(TestSecurityConfig.class)
 class BarberServicesControllerTest {
@@ -52,6 +53,7 @@ class BarberServicesControllerTest {
     }
 
     @Test
+    @WithMockUser
     void allServices_returnListOfBarberServices_statusOk() throws Exception {
         given(service.getAllServices()).willReturn(List.of(standard,beardTrim));
 
@@ -62,6 +64,7 @@ class BarberServicesControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     void addService_statusCreated() throws Exception {
         given(service.save(ArgumentMatchers.any())).willReturn(standard);
 
@@ -78,6 +81,24 @@ class BarberServicesControllerTest {
     }
 
     @Test
+    @WithMockUser
+    void addService_statusForbidden() throws Exception {
+        given(service.save(ArgumentMatchers.any())).willReturn(standard);
+
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/services/add")
+                .param("name", "Standard Haircut")
+                .param("price", "20.00")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(standard)));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isForbidden())
+                .andDo(MockMvcResultHandlers.print());
+
+        Assertions.assertEquals(standard, service.save(standard));
+    }
+
+    @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     void editPrice_statusCreated() throws Exception {
         given(service.getByName("standard")).willReturn(standard);
 
@@ -94,13 +115,39 @@ class BarberServicesControllerTest {
     }
 
     @Test
-    void delete_statusNoContent() throws Exception {
+    @WithMockUser
+    void editPrice_statusForbidden() throws Exception {
+        given(service.getByName("standard")).willReturn(standard);
 
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/services/update")
+                .param("name", "standard")
+                .param("newPrice", "25.50")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(standard)));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isForbidden())
+                .andDo(MockMvcResultHandlers.print());
+        Assertions.assertEquals(20.00, standard.getPrice());
+    }
+    @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    void delete_statusNoContent() throws Exception {
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.delete("/api/services/delete")
                 .param("name", "standard")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(standard)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    @WithMockUser
+    void delete_statusForbidden() throws Exception {
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.delete("/api/services/delete")
+                .param("name", "standard")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(standard)));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isForbidden());
     }
 }
