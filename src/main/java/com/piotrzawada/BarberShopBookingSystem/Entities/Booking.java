@@ -25,7 +25,10 @@ public class Booking {
     @JsonIgnore
     public Long id;
 
+    public String name;
+
     public LocalDateTime localDateTime;
+
     public double price;
 
     @JsonIgnore

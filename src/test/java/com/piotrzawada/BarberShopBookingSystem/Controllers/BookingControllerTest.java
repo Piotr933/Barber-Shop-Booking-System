@@ -3,7 +3,9 @@ package com.piotrzawada.BarberShopBookingSystem.Controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.piotrzawada.BarberShopBookingSystem.Config.TestSecurityConfig;
 import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
+import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServices;
 import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
+import com.piotrzawada.BarberShopBookingSystem.Services.BarberServices_Service;
 import com.piotrzawada.BarberShopBookingSystem.Services.BookingService;
 import com.piotrzawada.BarberShopBookingSystem.Services.UserService;
 import org.junit.jupiter.api.Assertions;
@@ -45,6 +47,9 @@ class BookingControllerTest {
     ObjectMapper objectMapper;
     @MockBean
     BookingService bookingService;
+
+    @MockBean
+    BarberServices_Service barberService;
     @MockBean
     UserService userService;
     @MockBean
@@ -53,6 +58,8 @@ class BookingControllerTest {
     Booking booking, booking2, booking3;
 
     AppUser appUser;
+
+    BarberServices barberServices;
 
     @BeforeEach
     public void init() {
@@ -74,6 +81,9 @@ class BookingControllerTest {
                 .localDateTime(LocalDateTime.of(2026, 11, 4, 10, 30))
                 .appUser(appUser)
                 .build();
+        barberServices = BarberServices.builder()
+                .name("Standard Haircut")
+                .price(25.00).build();
         userDetails = User.withUsername("adam443243433@gmail.com")
                 .password("password")
                 .roles("USER")
@@ -86,15 +96,18 @@ class BookingControllerTest {
 
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
         given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking);
+        given(barberService.getByName(ArgumentMatchers.anyString())).willReturn(barberServices);
+
 
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/bookings/book")
                 .param("localDateTime", "2026-09-20T12:30")
+                .param("name", "Standard Haircut")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(booking)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Your visit has been successfully booked\"}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Your Standard Haircut has been successfully booked\"}"));
 
     }
 
@@ -107,6 +120,7 @@ class BookingControllerTest {
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/bookings/book")
                 .param("localDateTime", "2026-09-20T12:30")
+                .param("name", "Standard Haircut")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(booking)));
 
@@ -121,6 +135,7 @@ class BookingControllerTest {
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/bookings/book")
                 .param("localDateTime", "2026-09-20T22:30")
+                .param("name", "Standard Haircut")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(booking)));
 
@@ -137,6 +152,7 @@ class BookingControllerTest {
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/bookings/book")
                 .param("localDateTime", "2026-11-04T10:30")
+                .param("name", "Standard Haircut")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(booking)));
 

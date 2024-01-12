@@ -3,6 +3,7 @@ package com.piotrzawada.BarberShopBookingSystem.Controllers;
 import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
 import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
 import com.piotrzawada.BarberShopBookingSystem.Dto.Response;
+import com.piotrzawada.BarberShopBookingSystem.Services.BarberServices_Service;
 import com.piotrzawada.BarberShopBookingSystem.Services.BookingService;
 import com.piotrzawada.BarberShopBookingSystem.Services.UserService;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,8 @@ public class BookingController {
 
     UserService userService;
 
+    BarberServices_Service barberService;
+
     /**
      * Book visit in a Barber
      * @param userDetails - represents the user who make the appointment
@@ -39,10 +42,11 @@ public class BookingController {
 
     @PutMapping("/book")
     public ResponseEntity<Response> bookVisit(@AuthenticationPrincipal UserDetails userDetails,
-                                              @RequestParam String localDateTime) {
+                                              @RequestParam String localDateTime, @RequestParam String name) {
         Response response = new Response();
         AppUser appUser = userService.getByEmail(userDetails.getUsername());
         Booking booking = bookingService.getByDataTime(LocalDateTime.parse(localDateTime));
+
 
         if (booking == null) {
             response.setMessage("No booking is available at this date and time");
@@ -51,9 +55,12 @@ public class BookingController {
         }
 
         if (booking.getAppUser() == null) {
+
             booking.setAppUser(appUser);
+            booking.setPrice(barberService.getByName(name).getPrice());
+            booking.setName(name);
             bookingService.saveBooking(booking);
-            response.setMessage("Your visit has been successfully booked");
+            response.setMessage("Your "+ name + " has been successfully booked");
 
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
