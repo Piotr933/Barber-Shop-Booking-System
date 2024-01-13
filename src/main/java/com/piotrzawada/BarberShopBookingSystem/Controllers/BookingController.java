@@ -1,8 +1,8 @@
 package com.piotrzawada.BarberShopBookingSystem.Controllers;
 
+import com.piotrzawada.BarberShopBookingSystem.Dto.Response;
 import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
 import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
-import com.piotrzawada.BarberShopBookingSystem.Dto.Response;
 import com.piotrzawada.BarberShopBookingSystem.Services.BarberServices_Service;
 import com.piotrzawada.BarberShopBookingSystem.Services.BookingService;
 import com.piotrzawada.BarberShopBookingSystem.Services.UserService;
@@ -12,9 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+
 /**
  * Rest Controller for handles REST requests related to the Bookings.
  *
@@ -144,6 +147,13 @@ public class BookingController {
 
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(bookingService.availableByDate(localDate), HttpStatus.OK);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        List<LocalDateTime> availableTimes = bookingService.availableByDate(localDate)
+                .stream().map(Booking::getLocalDateTime).toList();
+
+        return new ResponseEntity<>(availableTimes.stream()
+                .map(dateTime -> dateTime.format(formatter)).toList(), HttpStatus.OK);
     }
 }

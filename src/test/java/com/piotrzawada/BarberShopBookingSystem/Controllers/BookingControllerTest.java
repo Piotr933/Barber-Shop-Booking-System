@@ -273,7 +273,7 @@ class BookingControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(booking)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("[{\"localDateTime\":\"2026-09-20T12:30:00\",\"price\":0.0},{\"localDateTime\":\"2026-11-04T10:00:00\",\"price\":0.0}]"));
+                .andExpect(MockMvcResultMatchers.content().json("[\"12:30\",\"10:00\"]"));
 
     }
     @Test
