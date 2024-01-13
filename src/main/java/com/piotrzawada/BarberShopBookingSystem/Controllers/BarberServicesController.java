@@ -8,6 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Rest Controller for handles REST requests related to the Barber Services.
+ *
+ * @author Piotr Zawada
+ * @version 1.1
+ */
+
 @RestController
 @RequestMapping("/api/services")
 @AllArgsConstructor
@@ -15,11 +22,21 @@ public class BarberServicesController {
 
     BarberServices_Service service;
 
+    /**
+     * This method is for display all services providing by the Barber Shop
+     * @return Response Entity (List of BarberServices objects, Http Status)
+     */
     @GetMapping("/all")
     public ResponseEntity<?> allServices() {
         return new ResponseEntity<>(service.getAllServices(), HttpStatus.OK);
     }
 
+    /**
+     * Add new Barber Service that the Barber Shop will be providing
+     * @param name represents the service name
+     * @param price price of the barber service
+     * @return Response Entity(message, Http Status)
+     */
     @PostMapping("/add")
     public ResponseEntity<Response> addService(String name, double price) {
         Response response = new Response();
@@ -34,6 +51,12 @@ public class BarberServicesController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    /**
+     * Edit the price of the Barber Service
+     * @param name the name of the service to edit
+     * @param newPrice new price of the barber service
+     * @return Response Entity(message, Http Status)
+     */
     @PutMapping("/update")
     public ResponseEntity<Response> editPrice(String name, double newPrice) {
         Response response = new Response();
@@ -46,6 +69,11 @@ public class BarberServicesController {
 
        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+    /**
+     * Delete the barber service
+     * @param name name of the service
+     * @return Response Entity(message, Http Status)
+     */
     @DeleteMapping("/delete")
     public ResponseEntity<Response> delete(String name) {
         Response response = new Response();

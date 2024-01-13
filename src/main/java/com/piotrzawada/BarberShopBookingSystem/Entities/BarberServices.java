@@ -6,7 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * JPA Entity
+ * @author Piotr Zawada
+ * @version 1.1
+ */
 @Entity
 @Data
 @NoArgsConstructor

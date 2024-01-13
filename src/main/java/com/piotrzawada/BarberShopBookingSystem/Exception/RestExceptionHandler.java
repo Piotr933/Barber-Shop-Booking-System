@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * Exception handler for REST controllers, providing consistent handling of specific exceptions and generating
  * appropriate response entities.
  * @author Piotr Zawada
- * @version 1.0.2
+ * @version 1.1
  * */
 @RestControllerAdvice
 public class RestExceptionHandler {
@@ -20,7 +20,7 @@ public class RestExceptionHandler {
      * * Handles the exception raised when method arguments fail validation.
      *
      * @param exception MethodArgumentNotValidException.class representing the validation failure.
-     * @return A ResponseEntity containing a Response with a custom error message.
+     * @return Response Entity(Http Status, body with response);
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Response> handleValidationException(MethodArgumentNotValidException exception) {

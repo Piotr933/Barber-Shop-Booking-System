@@ -10,7 +10,7 @@ import java.util.List;
  * Implementation of the Spring Security UserDetails interface, providing user detail for authentication and
  * authorization purposes.
  * @author Piotr Zawada
- * @version 1.0.2
+ * @version 1.1
  */
 
 public class UserDetailsImpl implements UserDetails {

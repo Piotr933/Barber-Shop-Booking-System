@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * Rest Controller for handles REST requests related to the Admins.
  *
  * @author Piotr Zawada
- * @version 1.0.2
+ * @version 1.1
  */
 @RestController
 @AllArgsConstructor

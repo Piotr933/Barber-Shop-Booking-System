@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * Implementation of the Spring Security UserDetailsService interface, responsible for loading user details based on
  * their username (email)
  * @author Piotr Zawada
- * @version 1.0.2
+ * @version 1.1
  */
 @Service
 @AllArgsConstructor

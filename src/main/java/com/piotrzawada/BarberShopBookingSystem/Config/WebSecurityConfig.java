@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 /**
  * Web Security Configuration
  * @author Piotr Zawada
- * @version 1.0.2
+ * @version 1.1
  */
 @Configuration
 @EnableWebSecurity

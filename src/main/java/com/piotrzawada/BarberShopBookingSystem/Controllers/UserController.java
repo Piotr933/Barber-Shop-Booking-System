@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Rest Controller for handles REST requests related to the App User.
  *
  * @author Piotr Zawada
- * @version 1.0.2
+ * @version 1.1
  */
 @RestController
 @AllArgsConstructor
@@ -28,7 +28,7 @@ public class UserController {
     /**
      * It is for register new app user
      * @param user AppUser object
-     * @return ResponseEntity containing a response with the message
+     * @return ResponseEntity (message, Http Status)
      */
     @PostMapping("/api/register")
     public ResponseEntity<Response> register(@RequestBody @Valid AppUser user) {

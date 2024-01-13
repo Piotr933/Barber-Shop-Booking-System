@@ -22,7 +22,7 @@ import java.util.List;
  * Rest Controller for handles REST requests related to the Bookings.
  *
  * @author Piotr Zawada
- * @version 1.0.2
+ * @version 1.1
  */
 
 @RestController
@@ -40,9 +40,8 @@ public class BookingController {
      * Book visit in a Barber
      * @param userDetails - represents the user who make the appointment
      * @param localDateTime - String value of date and time of appointment
-     * @return Response Entity with message and Http Status.
+     * @return Response Entity(message, Http Status)
      */
-
     @PutMapping("/book")
     public ResponseEntity<Response> bookVisit(@AuthenticationPrincipal UserDetails userDetails,
                                               @RequestParam String localDateTime, @RequestParam String name) {
@@ -77,7 +76,7 @@ public class BookingController {
      * Cancel booking by user
      * @param userDetails  represents the user who want to cancel appointment.
      * @param ldt String value of date and time of cancelling appointment
-     * @return Response Entity with message and Http Status.
+     * @return Response Entity(message, Http Status)
      */
 
     @PutMapping("/cancel")
@@ -116,7 +115,7 @@ public class BookingController {
     /**
      * Display all user bookings
      * @param userDetails represents the user
-     * @return Response Entity with list of user bookings and Http Status
+     * @return Response Entity (List of Bookings, Http Status)
      */
 
     @GetMapping("/myBookings")
@@ -135,7 +134,7 @@ public class BookingController {
     /**
      * Display the time slots available to book by date
      * @param date String value with date
-     * @return Response Entity with list of available times and Http Status
+     * @return Response Entity (List of strings in date format HH:mm, Http Status)
      */
     @GetMapping("/availableTimes")
     public ResponseEntity<?> getAvailableSlots(@RequestParam String date) {

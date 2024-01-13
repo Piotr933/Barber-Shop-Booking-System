@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 /**
  * JPA Entity
  * @author Piotr Zawada
- * @version 1.0.2
+ * @version 1.1
  */
 @Entity
 @Data

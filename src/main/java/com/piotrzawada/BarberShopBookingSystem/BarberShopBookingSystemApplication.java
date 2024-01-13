@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * The main class that initializes and runs the Booking System Application.
  * @author Piotr Zawada
- * @version 1.0.2
+ * @version 1.1
  */
 @SpringBootApplication
 public class BarberShopBookingSystemApplication {
