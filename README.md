@@ -19,7 +19,7 @@ https://github.com/Piotr933/Barber-Shop-Booking-System.git
 Piotr Zawada
 
 ## Version 
-* 1.0.2
+* 1.1
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
