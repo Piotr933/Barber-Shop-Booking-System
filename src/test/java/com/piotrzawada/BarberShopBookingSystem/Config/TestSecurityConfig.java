@@ -21,7 +21,7 @@ public class TestSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain configureTest(HttpSecurity httpSecurity) throws Exception {
         return  httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
