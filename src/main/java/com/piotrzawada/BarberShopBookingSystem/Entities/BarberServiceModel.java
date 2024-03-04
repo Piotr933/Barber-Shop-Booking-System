@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Table
-public class BarberServices {
+public class BarberServiceModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

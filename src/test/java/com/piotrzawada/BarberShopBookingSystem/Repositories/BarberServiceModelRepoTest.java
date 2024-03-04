@@ -1,6 +1,6 @@
 package com.piotrzawada.BarberShopBookingSystem.Repositories;
 
-import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServices;
+import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServiceModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,22 +13,22 @@ import java.util.List;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-class BarberServicesRepoTest {
+class BarberServiceModelRepoTest {
 
     @Autowired
-    BarberServicesRepo repo;
+    BarberServiceModelRepo repo;
 
 
-    private BarberServices standard, beardTrim, returnedService, returnedService2;
+    private BarberServiceModel standard, beardTrim, returnedService, returnedService2;
 
 
     @BeforeEach
     public void init() {
-        standard = BarberServices.builder()
+        standard = BarberServiceModel.builder()
                 .name("Standard Haircut")
                 .price(20.00)
                 .build();
-        beardTrim = BarberServices.builder()
+        beardTrim = BarberServiceModel.builder()
                 .name("Beard Trim")
                 .price(15.99)
                 .build();
@@ -48,7 +48,7 @@ class BarberServicesRepoTest {
 
     @Test
     void repo_save_returnListOfServices() {
-        List<BarberServices> list = repo.findAll();
+        List<BarberServiceModel> list = repo.findAll();
 
         Assertions.assertEquals(2, list.size());
         Assertions.assertEquals(15.99, list.get(1).getPrice());
@@ -56,7 +56,7 @@ class BarberServicesRepoTest {
 
     @Test
     void repo_findByName_returnBarberService() {
-        BarberServices service = repo.findByName("Standard Haircut");
+        BarberServiceModel service = repo.findByName("Standard Haircut");
 
         Assertions.assertNotNull(service);
         Assertions.assertEquals(20.00, service.getPrice());

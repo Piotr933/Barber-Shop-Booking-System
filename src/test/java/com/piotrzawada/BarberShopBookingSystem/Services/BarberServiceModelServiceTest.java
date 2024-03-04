@@ -1,7 +1,7 @@
 package com.piotrzawada.BarberShopBookingSystem.Services;
 
-import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServices;
-import com.piotrzawada.BarberShopBookingSystem.Repositories.BarberServicesRepo;
+import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServiceModel;
+import com.piotrzawada.BarberShopBookingSystem.Repositories.BarberServiceModelRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,21 +13,21 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class BarberServicesServiceTest {
+class BarberServiceModelServiceTest {
     @Mock
-    private BarberServicesRepo repo;
+    private BarberServiceModelRepo repo;
     @InjectMocks
-    private BarberServices_Service service;
+    private BarberServiceModel_Service service;
 
-    private BarberServices standard, beardTrim;
+    private BarberServiceModel standard, beardTrim;
 
     @BeforeEach
     public void init(){
-        standard = BarberServices.builder()
+        standard = BarberServiceModel.builder()
                 .name("Standard Haircut")
                 .price(20.00)
                 .build();
-        beardTrim = BarberServices.builder()
+        beardTrim = BarberServiceModel.builder()
                 .name("Beard Trim")
                 .price(15.99)
                 .build();
