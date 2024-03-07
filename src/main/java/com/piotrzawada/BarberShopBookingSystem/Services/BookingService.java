@@ -4,9 +4,9 @@ import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
 import com.piotrzawada.BarberShopBookingSystem.Repositories.BookingRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 /**
@@ -64,8 +64,9 @@ public class BookingService {
      * @return List of bookings by specified days with AppUser equal to null.
      */
     public List<Booking> availableByDate (LocalDate localDate) {
-        LocalDateTime startDateTime = LocalDateTime.of(localDate, LocalTime.MIN);
-        LocalDateTime endDateTime = LocalDateTime.of(localDate, LocalTime.MAX);
+        LocalDateTime startDateTime = localDate.atStartOfDay();
+        LocalDateTime endDateTime = localDate.atTime(23, 59,59);
+
         return bookingRepo.findByAppUserNullAndLocalDateTimeBetween(startDateTime, endDateTime);
     }
 }
