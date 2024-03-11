@@ -26,7 +26,9 @@ public class TestSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/api/admin/register/*").permitAll();
-                    auth.requestMatchers("/api/admin/add").hasRole("ADMIN");
+                    auth.requestMatchers("/api/admin/addSlots").hasRole("ADMIN");
+                    auth.requestMatchers("/api/admin/removeSlots").hasRole("ADMIN");
+                    auth.requestMatchers("/api/admin/removeOneSlotBy").hasRole("ADMIN");
                     auth.requestMatchers("/api/admin/usersBookings").hasAnyRole("ADMIN");
                     auth.requestMatchers("/api/admin/cancelBooking").hasAnyRole("ADMIN");
                     auth.requestMatchers("/api/bookings/availableTimes").permitAll();

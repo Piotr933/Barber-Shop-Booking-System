@@ -10,9 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,7 +39,6 @@ public class AdminController {
      *
      * @param user - AppUser object with Admin Details
      * @return Response Entity with response message and status.
-     *
      */
 
     @PostMapping("/register/3{}343d863reg--s")
@@ -73,49 +72,70 @@ public class AdminController {
     }
 
     /**
-     * This method is to for adding new available slots for booking.The admin need to provide the number of days that
-     * needs to be added.
-     * Currently, the bookings slots are adding only Monday to Friday: 9-18  every 30 minutes.
-     * Price for the booking by default has been set at 20.
-     *
-     * @param days int parameter that represents number of days to be added
-     * @return Response Entity with message and Http Status.
+     * This method is to for adding new available slots for booking.The admin need to provide the
+     * date, business hours, and duration of the visit
+     * @param localDate - date of new booking slots
+     * @param open - represent time that shop will open
+     * @param close - represent time that shop will close
+     * @param duration - The duration of each appointment.
+     * @return Response Entity with message with quantity of added now booking slots and Http status
      */
 
-    @PostMapping ("/add")
-    public ResponseEntity<Response> addEmptyBookingSlotsFor(@RequestParam int days ) {
-        Response response = new Response();
+    @PostMapping("/addSlots")
+    public ResponseEntity<Response> addSlotsByDay(String localDate, String open, String close, int duration) {
 
-        if (days > 30 || days < 0) {
-            response.setMessage("Adding new slots failed: Invalid entry. Please enter the value between 1 and 30 ");
+        LocalDate date = LocalDate.parse(localDate);
+        LocalDateTime startDay = date.atTime(LocalTime.parse(open));
+        LocalDateTime closing = date.atTime(LocalTime.parse(close));
+        LocalDateTime slotTime = startDay;
+        int count = 0;
 
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
-
-        int updatedSlots = 0;
-        LocalDate lastUpdatedAt = LocalDate.from(bookingService.latestDateTime());
-        LocalDateTime current= LocalDateTime.of(lastUpdatedAt.getYear(), lastUpdatedAt.getMonth(),
-                lastUpdatedAt.getDayOfMonth(), 0, 0);
-        LocalDateTime updateTill = current.plusDays(days);
-
-        while (!current.isAfter(updateTill)) {
-            if (current.getDayOfWeek() != DayOfWeek.SATURDAY && current.getDayOfWeek() != DayOfWeek.SUNDAY) {
-                LocalDateTime startDay = current.withHour(9).withMinute(0);
-                LocalDateTime endDay = current.withHour(18).withMinute(0);
-                LocalDateTime slotTime = startDay;
-
-                while (!slotTime.isAfter(endDay)) {
-                    Booking booking = new Booking(slotTime, 20);
-                        bookingService.saveBooking(booking);
-                        slotTime = slotTime.plusMinutes(30);
-                        updatedSlots++;
-                }
+        while (!slotTime.isAfter(closing)) {
+            Booking booking = new Booking(slotTime, 0);
+            if (bookingService.getByDataTime(booking.localDateTime) == null) {
+                bookingService.saveBooking(booking);
+                count++;
             }
-            current = current.plusDays(1);
+            slotTime = slotTime.plusMinutes(duration);
         }
-        response.setMessage("Booking slots have been updated successfully: " + updatedSlots);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        return new ResponseEntity<Response>(new Response(count + " booking slots added on " + date ),
+                HttpStatus.CREATED);
     }
+
+    /**
+     * This method is for removing all booking slots by provided date.
+     * @param localDate - date
+     * @return Response Entity with message, quantity of deleted booking slots and HttpStatus
+     */
+
+    @DeleteMapping("/removeSlots")
+    public ResponseEntity<Response> removeSlotsByDay(String localDate) {
+        List<Booking> bookings = bookingService.availableByDate(LocalDate.parse(localDate));
+        for (Booking booking : bookings) {
+            bookingService.removeBooking(booking);
+        }
+        return new ResponseEntity<Response>(new Response(bookings.size() + " removed  slots on  " + localDate),
+                HttpStatus.OK);
+    }
+
+    /**
+     * This method is for removing single booking slot by provided date and time
+     * @param localDateTime - date and time
+     * @return Response Entity with message and HttpStatus
+     */
+
+    @DeleteMapping("/removeOneSlotBy")
+    public ResponseEntity<Response> removeSingleSlot(String localDateTime) {
+        Booking booking = bookingService.getByDataTime(LocalDateTime.parse(localDateTime));
+        if (booking != null) {
+            bookingService.removeBooking(booking);
+            return new ResponseEntity<>(new Response("The booking slot has been removed"), HttpStatus.OK);
+
+        }
+        return new ResponseEntity<Response>(new Response("There is no Booking Slot at this data and time"), HttpStatus.CONFLICT);
+    }
+
 
     /**
      * This method is for display all users bookings.

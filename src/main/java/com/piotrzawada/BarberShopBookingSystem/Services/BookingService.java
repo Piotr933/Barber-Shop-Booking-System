@@ -38,6 +38,10 @@ public class BookingService {
         return bookingRepo.save(booking);
     }
 
+    public void removeBooking(Booking booking) {
+        bookingRepo.delete(booking);
+    }
+
     /**
      * Retrieves All reserved Bookings from the database
      * @return List of Bookings objects when appUser is not equal to null.
@@ -65,7 +69,7 @@ public class BookingService {
      */
     public List<Booking> availableByDate (LocalDate localDate) {
         LocalDateTime startDateTime = localDate.atStartOfDay();
-        LocalDateTime endDateTime = localDate.atTime(23, 59,59);
+        LocalDateTime endDateTime = localDate.atTime(23, 59,00);
 
         return bookingRepo.findByAppUserNullAndLocalDateTimeBetween(startDateTime, endDateTime);
     }
