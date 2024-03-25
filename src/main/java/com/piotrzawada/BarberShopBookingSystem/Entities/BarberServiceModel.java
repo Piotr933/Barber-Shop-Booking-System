@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 /**
  * JPA Entity
  * @author Piotr Zawada
- * @version 1.1
+ * @version 1.2
  */
 @Entity
 @Data
