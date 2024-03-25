@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Rest Controller for handles REST requests related to the App User.
  *
  * @author Piotr Zawada
- * @version 1.1
+ * @version 1.2
  */
 @RestController
 @AllArgsConstructor

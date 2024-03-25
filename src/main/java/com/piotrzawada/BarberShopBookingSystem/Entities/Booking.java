@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 /**
  * JPA Entity representing an BookingSlot (User or Admin)
  * @author Piotr Zawada
- * @version 1.1
+ * @version 1.2
  */
 @Entity
 @Data

@@ -8,7 +8,7 @@ import java.util.List;
  * in the database. It extends the CrudRepository.
  *
  * @author Piotr Zawada
- * @version 1.1
+ * @version 1.2
  */
 public interface BarberServiceModelRepo extends CrudRepository<BarberServiceModel, Long> {
 
