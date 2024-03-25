@@ -2,8 +2,8 @@ package com.piotrzawada.BarberShopBookingSystem;
 
 import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
 import com.piotrzawada.BarberShopBookingSystem.Repositories.UserRepo;
-import com.piotrzawada.BarberShopBookingSystem.Security.UserDetailsImpl;
-import com.piotrzawada.BarberShopBookingSystem.Services.BookingUserDetailsService;
+import com.piotrzawada.BarberShopBookingSystem.Security.AppUserAdapter;
+import com.piotrzawada.BarberShopBookingSystem.Security.AppUserDetailsServImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,11 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-class BookingUserDetailsServiceTest {
+class AppUserDetailsServImplTest {
 
 
     @InjectMocks
-    BookingUserDetailsService bookingUserDetailsService;
+    AppUserDetailsServImpl appUserDetailsServImpl;
 
     @Mock
     UserRepo userRepo;
@@ -37,14 +37,14 @@ class BookingUserDetailsServiceTest {
         appUser.setPassword("password");
         appUser.setRole("ROLE_USER");
         when(userRepo.findByEmail(anyString())).thenReturn(appUser);
-        BookingUserDetailsService userDetailsService = new BookingUserDetailsService(userRepo);
-        UserDetailsImpl userDetails = new UserDetailsImpl(appUser);
+        AppUserDetailsServImpl userDetailsService = new AppUserDetailsServImpl(userRepo);
+        AppUserAdapter userDetails = new AppUserAdapter(appUser);
         assertNotNull(userDetailsService.loadUserByUsername("SampleEmail"));
     }
     @Test
     void whenAppUserNullShouldThrowUsernameNotFoundException () {
         when(userRepo.findByEmail(anyString())).thenReturn(null);
-        BookingUserDetailsService userDetailsService = new BookingUserDetailsService(userRepo);
+        AppUserDetailsServImpl userDetailsService = new AppUserDetailsServImpl(userRepo);
         assertThrows(UsernameNotFoundException.class, () -> userDetailsService.loadUserByUsername("AnyString)"));
     }
 }

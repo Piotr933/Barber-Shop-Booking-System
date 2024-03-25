@@ -2,8 +2,8 @@ package com.piotrzawada.BarberShopBookingSystem.Controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.piotrzawada.BarberShopBookingSystem.Config.TestSecurityConfig;
-import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServices;
-import com.piotrzawada.BarberShopBookingSystem.Services.BarberServices_Service;
+import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServiceModel;
+import com.piotrzawada.BarberShopBookingSystem.Services.BarberServiceModel_Service;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,28 +25,28 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 import static org.mockito.BDDMockito.given;
 
-@WebMvcTest(controllers = BarberServicesController.class)
+@WebMvcTest(controllers = BarberServiceModelController.class)
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
 @Import(TestSecurityConfig.class)
-class BarberServicesControllerTest {
+class BarberServiceModelControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    BarberServices_Service service;
-    private BarberServices standard, beardTrim;
+    BarberServiceModel_Service service;
+    private BarberServiceModel standard, beardTrim;
 
     @BeforeEach
     public void init() {
 
-        standard = BarberServices.builder()
+        standard = BarberServiceModel.builder()
                 .name("Standard Haircut")
                 .price(20.00)
                 .build();
-        beardTrim = BarberServices.builder()
+        beardTrim = BarberServiceModel.builder()
                 .name("Beard Trim")
                 .price(15.99)
                 .build();

@@ -3,7 +3,7 @@ package com.piotrzawada.BarberShopBookingSystem.Controllers;
 import com.piotrzawada.BarberShopBookingSystem.Dto.Response;
 import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
 import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
-import com.piotrzawada.BarberShopBookingSystem.Services.BarberServices_Service;
+import com.piotrzawada.BarberShopBookingSystem.Services.BarberServiceModel_Service;
 import com.piotrzawada.BarberShopBookingSystem.Services.BookingService;
 import com.piotrzawada.BarberShopBookingSystem.Services.UserService;
 import lombok.AllArgsConstructor;
@@ -34,7 +34,7 @@ public class BookingController {
 
     UserService userService;
 
-    BarberServices_Service barberService;
+    BarberServiceModel_Service barberService;
 
     /**
      * Book visit in a Barber

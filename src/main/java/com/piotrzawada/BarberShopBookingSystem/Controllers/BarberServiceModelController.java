@@ -1,8 +1,8 @@
 package com.piotrzawada.BarberShopBookingSystem.Controllers;
 
 import com.piotrzawada.BarberShopBookingSystem.Dto.Response;
-import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServices;
-import com.piotrzawada.BarberShopBookingSystem.Services.BarberServices_Service;
+import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServiceModel;
+import com.piotrzawada.BarberShopBookingSystem.Services.BarberServiceModel_Service;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/services")
 @AllArgsConstructor
-public class BarberServicesController {
+public class BarberServiceModelController {
 
-    BarberServices_Service service;
+    BarberServiceModel_Service service;
 
     /**
      * This method is for display all services providing by the Barber Shop
@@ -40,7 +40,7 @@ public class BarberServicesController {
     @PostMapping("/add")
     public ResponseEntity<Response> addService(String name, double price) {
         Response response = new Response();
-        BarberServices barberService = BarberServices.builder()
+        BarberServiceModel barberService = BarberServiceModel.builder()
                 .name(name)
                 .price(price)
                 .build();
@@ -61,7 +61,7 @@ public class BarberServicesController {
     public ResponseEntity<Response> editPrice(String name, double newPrice) {
         Response response = new Response();
 
-        BarberServices barberService =  service.getByName(name);
+        BarberServiceModel barberService =  service.getByName(name);
         barberService.setPrice(newPrice);
 
         service.save(barberService);
