@@ -20,7 +20,7 @@ public class RestExceptionHandler {
      * * Handles the exception raised when method arguments fail validation.
      *
      * @param exception MethodArgumentNotValidException.class representing the validation failure.
-     * @return Response Entity(Http Status, body with response);
+     * @return Response Entity with message and HttpStatus
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Response> handleValidationException(MethodArgumentNotValidException exception) {

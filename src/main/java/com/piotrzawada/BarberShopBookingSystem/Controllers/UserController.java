@@ -26,8 +26,8 @@ public class UserController {
     PasswordEncoder encoder;
 
     /**
-     * It is for register new app user
-     * @param user AppUser object
+     * Register new App user
+     * @param user user details
      * @return ResponseEntity (message, Http Status)
      */
     @PostMapping("/api/register")

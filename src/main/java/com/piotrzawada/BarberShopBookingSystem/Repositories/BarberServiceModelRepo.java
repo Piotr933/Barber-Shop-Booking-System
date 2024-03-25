@@ -14,8 +14,8 @@ public interface BarberServiceModelRepo extends CrudRepository<BarberServiceMode
 
     /**
      * Retrieve BarberService by the given Barber Service name
-     * @param name name of the Barber Service
-     * @return
+     * @param name name
+     * @return barberServiceModel
      */
     BarberServiceModel findByName(String name);
 

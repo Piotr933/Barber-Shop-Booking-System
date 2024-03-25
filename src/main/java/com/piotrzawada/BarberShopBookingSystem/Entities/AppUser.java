@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * JPA Entity
+ * JPA Entity representing an application user (User or Admin)
  * @author Piotr Zawada
  * @version 1.2
  */

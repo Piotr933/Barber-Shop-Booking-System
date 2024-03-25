@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * JPA Entity
+ * JPA Entity representing an BookingSlot (User or Admin)
  * @author Piotr Zawada
  * @version 1.2
  */
