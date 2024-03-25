@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * Rest Controller for handles REST requests related to the Barber Services.
  *
  * @author Piotr Zawada
- * @version 1.2
+ * @version 1.1
  */
 
 @RestController

@@ -8,7 +8,7 @@ import lombok.Setter;
  * The class representing a response message.
  * This class is used to encapsulate messages for various operations.
  * @author Piotr Zawada
- * @version 1.2
+ * @version 1.1
  */
 @Getter
 @Setter
