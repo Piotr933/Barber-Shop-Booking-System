@@ -1,6 +1,6 @@
 package com.piotrzawada.BarberShopBookingSystem.Repositories;
 
-import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServices;
+import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServiceModel;
 import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 /**
@@ -8,20 +8,20 @@ import java.util.List;
  * in the database. It extends the CrudRepository.
  *
  * @author Piotr Zawada
- * @version 1.1
+ * @version 1.2
  */
-public interface BarberServicesRepo extends CrudRepository<BarberServices, Long> {
+public interface BarberServiceModelRepo extends CrudRepository<BarberServiceModel, Long> {
 
     /**
      * Retrieve BarberService by the given Barber Service name
-     * @param name name of the Barber Service
-     * @return
+     * @param name name
+     * @return barberServiceModel
      */
-    BarberServices findByName(String name);
+    BarberServiceModel findByName(String name);
 
     /**
      * Retrieves all BarberService objects
      * @return List of BarberService objects
      */
-    List<BarberServices> findAll();
+    List<BarberServiceModel> findAll();
 }

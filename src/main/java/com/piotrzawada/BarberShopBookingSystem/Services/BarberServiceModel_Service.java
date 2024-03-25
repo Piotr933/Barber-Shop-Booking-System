@@ -1,7 +1,7 @@
 package com.piotrzawada.BarberShopBookingSystem.Services;
 
-import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServices;
-import com.piotrzawada.BarberShopBookingSystem.Repositories.BarberServicesRepo;
+import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServiceModel;
+import com.piotrzawada.BarberShopBookingSystem.Repositories.BarberServiceModelRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -9,21 +9,21 @@ import java.util.List;
 /**
  * The class offers a complete interface for Barber Services entity management, handling CRUD operations
  * @author Piotr Zawada
- * @version 1.1
+ * @version 1.2
  */
 
 @Service
 @AllArgsConstructor
-public class BarberServices_Service {
+public class BarberServiceModel_Service {
 
-    private final BarberServicesRepo repo;
+    private final BarberServiceModelRepo repo;
 
     /**
      * Saves provided BarberService in the database.
      * @param service Barber Service Object
      * @return BarberService Object
      */
-    public BarberServices save(BarberServices service) {
+    public BarberServiceModel save(BarberServiceModel service) {
         return repo.save(service);
     }
 
@@ -40,7 +40,7 @@ public class BarberServices_Service {
      * @param name name of the Barber Service object
      * @return Barber Service object
      */
-    public BarberServices getByName(String name) {
+    public BarberServiceModel getByName(String name) {
         return  repo.findByName(name);
     }
 
@@ -48,7 +48,7 @@ public class BarberServices_Service {
      * Retrieves List of the all BarberServices object from the database.
      * @return List of Barber Services objects
      */
-    public List<BarberServices> getAllServices() {
+    public List<BarberServiceModel> getAllServices() {
         return repo.findAll();
     }
 }

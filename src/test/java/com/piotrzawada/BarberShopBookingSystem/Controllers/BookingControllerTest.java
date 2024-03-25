@@ -3,9 +3,9 @@ package com.piotrzawada.BarberShopBookingSystem.Controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.piotrzawada.BarberShopBookingSystem.Config.TestSecurityConfig;
 import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
-import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServices;
+import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServiceModel;
 import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
-import com.piotrzawada.BarberShopBookingSystem.Services.BarberServices_Service;
+import com.piotrzawada.BarberShopBookingSystem.Services.BarberServiceModel_Service;
 import com.piotrzawada.BarberShopBookingSystem.Services.BookingService;
 import com.piotrzawada.BarberShopBookingSystem.Services.UserService;
 import org.junit.jupiter.api.Assertions;
@@ -49,7 +49,7 @@ class BookingControllerTest {
     BookingService bookingService;
 
     @MockBean
-    BarberServices_Service barberService;
+    BarberServiceModel_Service barberService;
     @MockBean
     UserService userService;
     @MockBean
@@ -59,7 +59,7 @@ class BookingControllerTest {
 
     AppUser appUser;
 
-    BarberServices barberServices;
+    BarberServiceModel barberServiceModel;
 
     @BeforeEach
     public void init() {
@@ -81,7 +81,7 @@ class BookingControllerTest {
                 .localDateTime(LocalDateTime.of(2026, 11, 4, 10, 30))
                 .appUser(appUser)
                 .build();
-        barberServices = BarberServices.builder()
+        barberServiceModel = BarberServiceModel.builder()
                 .name("Standard Haircut")
                 .price(25.00).build();
         userDetails = User.withUsername("adam443243433@gmail.com")
@@ -96,7 +96,7 @@ class BookingControllerTest {
 
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
         given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking);
-        given(barberService.getByName(ArgumentMatchers.anyString())).willReturn(barberServices);
+        given(barberService.getByName(ArgumentMatchers.anyString())).willReturn(barberServiceModel);
 
 
 

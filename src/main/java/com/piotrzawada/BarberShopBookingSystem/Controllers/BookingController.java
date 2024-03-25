@@ -3,7 +3,7 @@ package com.piotrzawada.BarberShopBookingSystem.Controllers;
 import com.piotrzawada.BarberShopBookingSystem.Dto.Response;
 import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
 import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
-import com.piotrzawada.BarberShopBookingSystem.Services.BarberServices_Service;
+import com.piotrzawada.BarberShopBookingSystem.Services.BarberServiceModel_Service;
 import com.piotrzawada.BarberShopBookingSystem.Services.BookingService;
 import com.piotrzawada.BarberShopBookingSystem.Services.UserService;
 import lombok.AllArgsConstructor;
@@ -22,9 +22,8 @@ import java.util.List;
  * Rest Controller for handles REST requests related to the Bookings.
  *
  * @author Piotr Zawada
- * @version 1.1
+ * @version 1.2
  */
-
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/bookings")
@@ -34,13 +33,14 @@ public class BookingController {
 
     UserService userService;
 
-    BarberServices_Service barberService;
+    BarberServiceModel_Service barberService;
 
     /**
      * Book visit in a Barber
-     * @param userDetails - represents the user who make the appointment
-     * @param localDateTime - String value of date and time of appointment
-     * @return Response Entity(message, Http Status)
+     * @param userDetails - details of the user who make a booking
+     * @param localDateTime - date and time of the appointment
+     * @param name - name of the service example:Dry Hair Cut
+     * @return Response Entity with message and HttpStatus
      */
     @PutMapping("/book")
     public ResponseEntity<Response> bookVisit(@AuthenticationPrincipal UserDetails userDetails,
@@ -74,9 +74,9 @@ public class BookingController {
 
     /**
      * Cancel booking by user
-     * @param userDetails  represents the user who want to cancel appointment.
-     * @param ldt String value of date and time of cancelling appointment
-     * @return Response Entity(message, Http Status)
+     * @param userDetails  details of the user who want to cancel the booking
+     * @param ldt date and time
+     * @return Response Entity with message and HttpStatus
      */
 
     @PutMapping("/cancel")
@@ -113,9 +113,9 @@ public class BookingController {
     }
 
     /**
-     * Display all user bookings
-     * @param userDetails represents the user
-     * @return Response Entity (List of Bookings, Http Status)
+     * Display all existing and past customer bookings
+     * @param userDetails details of the user who want to see his/her bookings details
+     * @return  Response Entity with map of user bookings and HttpStatus
      */
 
     @GetMapping("/myBookings")
@@ -134,7 +134,7 @@ public class BookingController {
     /**
      * Display the time slots available to book by date
      * @param date String value with date
-     * @return Response Entity (List of strings in date format HH:mm, Http Status)
+     * @return Response Entity (List of strings in hour format HH:mm, Http Status)
      */
     @GetMapping("/availableTimes")
     public ResponseEntity<?> getAvailableSlots(@RequestParam String date) {

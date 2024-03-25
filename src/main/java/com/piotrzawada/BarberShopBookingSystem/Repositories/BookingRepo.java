@@ -8,39 +8,34 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * This interface defines the contract for accessing and managing Bookings entities
+ * This interface defines the contract for accessing and managing Bookings Slots entities
  * in the database. It extends the CrudRepository.
  *
  * @author Piotr Zawada
- * @version 1.1
+ * @version 1.2
  */
 public interface BookingRepo extends CrudRepository<Booking, Long> {
 
     /**
-     * Retrieves a list of bookings associated with the given appUser object
+     * Retrieves a list of bookings associated with the given appUser
      * @param appUser
-     * @return List of Bookings
+     * @return List of Bookings Slots
      */
     List<Booking> findAllByAppUser(AppUser appUser);
 
     /**
      * Retrieves a list of bookings with AppUser equal to null
-     * @return List of Bookings
+     * @return List of Bookings Slots
      */
     List<Booking> findByAppUserIsNotNull();
 
     /**
      * Retrieves a Booking associated with the given LocalDataTime
      * @param localDateTime LocalDataTime
-     * @return Booking object
+     * @return BookingSlot object
      */
     Booking findByLocalDateTime(LocalDateTime localDateTime);
 
-    /**
-     * Retrieves the latest (maximum) local date and time of all bookings.This custom query is executed to retrieve the
-     * maximum local date and time among all bookings stored in the data source.
-     * @return LocalDateTime of latest booking.
-     */
     @Query("SELECT MAX(b.localDateTime) FROM Booking b")
     LocalDateTime findLatestDateTime();
 
