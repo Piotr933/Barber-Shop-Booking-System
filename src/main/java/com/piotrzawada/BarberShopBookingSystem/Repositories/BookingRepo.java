@@ -2,8 +2,8 @@ package com.piotrzawada.BarberShopBookingSystem.Repositories;
 
 import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
 import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,9 +35,6 @@ public interface BookingRepo extends CrudRepository<Booking, Long> {
      * @return BookingSlot object
      */
     Booking findByLocalDateTime(LocalDateTime localDateTime);
-
-    @Query("SELECT MAX(b.localDateTime) FROM Booking b")
-    LocalDateTime findLatestDateTime();
 
     /**
      * Retrieves a list of bookings with no assigned app user and local date and time within a specified range.

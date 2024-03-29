@@ -128,17 +128,6 @@ class BookingRepoTest {
     }
 
     @Test
-    void bookingRepo_findLatestDateTime_returnLocalDataTime() {
-        userRepo.save(appUser);
-        bookingRepo.save(booking);
-        bookingRepo.save(booking2);
-        bookingRepo.save(booking3);
-
-        LocalDateTime localDateTime = bookingRepo.findLatestDateTime();
-        Assertions.assertEquals(booking3.getLocalDateTime(), localDateTime);
-    }
-
-    @Test
     void bookingRepo_findByAppUserNullAndLocalDateTimeBetween_returnListOfBooking() {
         userRepo.save(appUser);
         bookingRepo.save(booking);

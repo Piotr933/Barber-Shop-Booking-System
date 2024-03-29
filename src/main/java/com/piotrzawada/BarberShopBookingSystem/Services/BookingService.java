@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 /**
  * The BookingService class offers a complete interface for Booking entity management, handling CRUD operations
  * @author Piotr Zawada
@@ -54,13 +53,6 @@ public class BookingService {
         return bookingRepo.findByAppUserIsNotNull();
     }
 
-    public LocalDateTime latestDateTime() {
-        Optional<LocalDateTime> localDateTimeOptional = Optional.ofNullable(bookingRepo.findLatestDateTime());
-        if (localDateTimeOptional.isEmpty()) {
-            return LocalDateTime.now();
-        }
-        return bookingRepo.findLatestDateTime();
-    }
     /**
      * Retrieves all available to reserve Bookings from the database by provided date.
      * @param localDate Local Date Time

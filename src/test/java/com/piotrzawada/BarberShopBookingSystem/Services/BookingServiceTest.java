@@ -77,15 +77,6 @@ class BookingServiceTest {
     }
 
     @Test
-    void latestDateTime() {
-        LocalDateTime localDateTime = LocalDateTime.of(2026, 12, 11, 11, 0);
-
-        when(bookingRepo.findLatestDateTime()).thenReturn(booking3.getLocalDateTime());
-
-        Assertions.assertEquals(localDateTime, bookingService.latestDateTime());
-    }
-
-    @Test
     void availableByDate() {
         LocalDate localDate = LocalDate.of(2026, 9, 20);
 
