@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Table
-public class Booking {
+public class BookingSlot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
@@ -35,7 +35,7 @@ public class Booking {
     @ManyToOne
     public AppUser appUser;
 
-    public Booking(LocalDateTime localDateTime, double price) {
+    public BookingSlot(LocalDateTime localDateTime, double price) {
         this.localDateTime = localDateTime;
         this.price = price;
     }

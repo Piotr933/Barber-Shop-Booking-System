@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.piotrzawada.BarberShopBookingSystem.Config.TestSecurityConfig;
 import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
 import com.piotrzawada.BarberShopBookingSystem.Entities.BarberServiceModel;
-import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
+import com.piotrzawada.BarberShopBookingSystem.Entities.BookingSlot;
 import com.piotrzawada.BarberShopBookingSystem.Services.BarberServiceModel_Service;
-import com.piotrzawada.BarberShopBookingSystem.Services.BookingService;
+import com.piotrzawada.BarberShopBookingSystem.Services.BookingSlotsService;
 import com.piotrzawada.BarberShopBookingSystem.Services.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,14 +39,14 @@ import static org.mockito.BDDMockito.given;
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
 @Import(TestSecurityConfig.class)
-class BookingControllerTest {
+class BookingSlotControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     ObjectMapper objectMapper;
     @MockBean
-    BookingService bookingService;
+    BookingSlotsService bookingSlotsService;
 
     @MockBean
     BarberServiceModel_Service barberService;
@@ -55,7 +55,7 @@ class BookingControllerTest {
     @MockBean
     UserDetails userDetails;
 
-    Booking booking, booking2, booking3;
+    BookingSlot bookingSlot, bookingSlot2, bookingSlot3;
 
     AppUser appUser;
 
@@ -71,13 +71,13 @@ class BookingControllerTest {
                 .password("Password123#")
                 .build();
 
-        booking = Booking.builder()
+        bookingSlot = BookingSlot.builder()
                 .localDateTime(LocalDateTime.of(2026, 9, 20, 12, 30))
                 .build();
-        booking2 = Booking.builder()
+        bookingSlot2 = BookingSlot.builder()
                 .localDateTime(LocalDateTime.of(2026, 11, 4, 10, 00))
                 .build();
-        booking3 = Booking.builder()
+        bookingSlot3 = BookingSlot.builder()
                 .localDateTime(LocalDateTime.of(2026, 11, 4, 10, 30))
                 .appUser(appUser)
                 .build();
@@ -95,7 +95,7 @@ class BookingControllerTest {
     void BookingController_bookVisit_statusOK() throws Exception {
 
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
-        given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking);
+        given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot);
         given(barberService.getByName(ArgumentMatchers.anyString())).willReturn(barberServiceModel);
 
 
@@ -104,7 +104,7 @@ class BookingControllerTest {
                 .param("localDateTime", "2026-09-20T12:30")
                 .param("name", "Standard Haircut")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(booking)));
+                .content(objectMapper.writeValueAsString(bookingSlot)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Your Standard Haircut has been successfully booked\"}"));
@@ -115,14 +115,14 @@ class BookingControllerTest {
     @WithAnonymousUser
     void BookingController_bookVisit_statusUnauthorised() throws Exception {
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
-        given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking);
+        given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot);
 
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/bookings/book")
                 .param("localDateTime", "2026-09-20T12:30")
                 .param("name", "Standard Haircut")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(booking)));
+                .content(objectMapper.writeValueAsString(bookingSlot)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
@@ -131,13 +131,13 @@ class BookingControllerTest {
     @WithMockUser
     void BookingController_bookVisit_statusBadRequest() throws Exception {
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
-        given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(null);
+        given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(null);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/bookings/book")
                 .param("localDateTime", "2026-09-20T22:30")
                 .param("name", "Standard Haircut")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(booking)));
+                .content(objectMapper.writeValueAsString(bookingSlot)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"No booking is available at this date and time\"}"));
@@ -148,13 +148,13 @@ class BookingControllerTest {
     @WithMockUser
     void BookingController_bookVisit_statusConflict() throws Exception {
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
-        given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking3);
+        given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot3);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/bookings/book")
                 .param("localDateTime", "2026-11-04T10:30")
                 .param("name", "Standard Haircut")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(booking)));
+                .content(objectMapper.writeValueAsString(bookingSlot)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isConflict())
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"This time slot is already booked\"}"));
@@ -170,29 +170,29 @@ class BookingControllerTest {
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
-        given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking3);
+        given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot3);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/bookings/cancel")
                 .param("ldt", "2026-11-04T10:30")
                 .contentType(MediaType.APPLICATION_JSON)
-                .contentType(objectMapper.writeValueAsString(booking3)));
+                .contentType(objectMapper.writeValueAsString(bookingSlot3)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Your booking has been successfully cancelled\"}"));
 
-        Assertions.assertNull(booking3.getAppUser());
+        Assertions.assertNull(bookingSlot3.getAppUser());
     }
 
     @Test
     @WithMockUser
     void BookingController_cancelVisit_statusNOT_FOUND() throws Exception {
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
-        given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking2);
+        given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot2);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/bookings/cancel")
                 .param("ldt", "2026-11-04T10:00")
                 .contentType(MediaType.APPLICATION_JSON)
-                .contentType(objectMapper.writeValueAsString(booking2)));
+                .contentType(objectMapper.writeValueAsString(bookingSlot2)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"No existing bookings for that date and time\"}"));
@@ -207,16 +207,16 @@ class BookingControllerTest {
                 userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        booking3.setLocalDateTime(LocalDateTime.now().minusHours(2));
-        booking3.setAppUser(appUser);
+        bookingSlot3.setLocalDateTime(LocalDateTime.now().minusHours(2));
+        bookingSlot3.setAppUser(appUser);
 
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
-        given(bookingService.getByDataTime(ArgumentMatchers.any())).willReturn(booking3);
+        given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot3);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/bookings/cancel")
                 .param("ldt", "2026-11-04T10:00")
                 .contentType(MediaType.APPLICATION_JSON)
-                .contentType(objectMapper.writeValueAsString(booking3)));
+                .contentType(objectMapper.writeValueAsString(bookingSlot3)));
 
 
         resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest())
@@ -228,7 +228,7 @@ class BookingControllerTest {
     void BookingController_myBookings_statusOK() throws Exception {
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
 
-        appUser.setBooking(List.of(booking));
+        appUser.setBookingSlot(List.of(bookingSlot));
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/bookings/myBookings"));
 
@@ -242,7 +242,7 @@ class BookingControllerTest {
     void BookingController_myBookings_statusUnauthorized() throws Exception {
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
 
-        appUser.setBooking(List.of(booking));
+        appUser.setBookingSlot(List.of(bookingSlot));
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/bookings/myBookings"));
         resultActions.andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
@@ -251,8 +251,8 @@ class BookingControllerTest {
     @WithMockUser
     void BookingController_myBookings_statusNO_CONTENT() throws Exception {
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
-        List<Booking> bookingList = new ArrayList<>();
-        appUser.setBooking(bookingList);
+        List<BookingSlot> bookingSlotList = new ArrayList<>();
+        appUser.setBookingSlot(bookingSlotList);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/bookings/myBookings"));
 
@@ -264,13 +264,13 @@ class BookingControllerTest {
     @WithAnonymousUser
     void BookingController_getAvailableSlots_statusOK() throws Exception {
         String date = "2027-11-22";
-        List<Booking> bookingList = List.of(booking, booking2);
+        List<BookingSlot> bookingSlotList = List.of(bookingSlot, bookingSlot2);
 
-        given(bookingService.availableByDate(ArgumentMatchers.any())).willReturn(bookingList);
+        given(bookingSlotsService.availableByDate(ArgumentMatchers.any())).willReturn(bookingSlotList);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/bookings/availableTimes")
                 .param("date", date)
-                .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(booking)));
+                .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(bookingSlot)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("[\"12:30\",\"10:00\"]"));
@@ -283,7 +283,7 @@ class BookingControllerTest {
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/bookings/availableTimes")
                 .param("date", date)
-                .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(booking)));
+                .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(bookingSlot)));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Wrong date has been chosen\"}"));
