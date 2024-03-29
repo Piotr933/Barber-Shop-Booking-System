@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * Rest Controller for handles REST requests related to the Barber Services.
  *
  * @author Piotr Zawada
- * @version 1.1
+ * @version 1.2
  */
 
 @RestController
@@ -33,7 +33,7 @@ public class BarberServiceModelController {
 
     /**
      * Add new Barber Service that the Barber Shop will be providing
-     * @param name represents the service name
+     * @param name  service name
      * @param price price of the barber service
      * @return Response Entity(message, Http Status)
      */
@@ -54,7 +54,7 @@ public class BarberServiceModelController {
     /**
      * Edit the price of the Barber Service
      * @param name the name of the service to edit
-     * @param newPrice new price of the barber service
+     * @param newPrice new price
      * @return Response Entity(message, Http Status)
      */
     @PutMapping("/update")
@@ -72,7 +72,7 @@ public class BarberServiceModelController {
     /**
      * Delete the barber service
      * @param name name of the service
-     * @return Response Entity(message, Http Status)
+     * @return Response Entity with message and HttpStatus
      */
     @DeleteMapping("/delete")
     public ResponseEntity<Response> delete(String name) {

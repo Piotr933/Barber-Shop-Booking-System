@@ -7,9 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 /**
- * JPA Entity
+ * JPA Entity representing Barber Service (example:Haircut)
  * @author Piotr Zawada
- * @version 1.1
+ * @version 1.2
  */
 @Entity
 @Data

@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * Rest Controller for handles REST requests related to the Admins.
  *
  * @author Piotr Zawada
- * @version 1.1
+ * @version 1.2
  */
 @RestController
 @AllArgsConstructor
@@ -35,10 +35,10 @@ public class AdminController {
     PasswordEncoder encoder;
 
     /**
-     * This method is for register Admin.If AppUser object meet all required criteria, the new admin will be registered.
+     * This method is for register Admin. If AppUser object meet all required criteria, the new admin will be registered.
      *
-     * @param user - AppUser object with Admin Details
-     * @return Response Entity with response message and status.
+     * @param user - Admin details
+     * @return Response Entity(message, Http Status)
      */
 
     @PostMapping("/register/3{}343d863reg--s")
@@ -74,6 +74,7 @@ public class AdminController {
     /**
      * This method is to for adding new available slots for booking.The admin need to provide the
      * date, business hours, and duration of the visit
+     *
      * @param localDate - date of new booking slots
      * @param open - represent time that shop will open
      * @param close - represent time that shop will close
@@ -105,7 +106,7 @@ public class AdminController {
 
     /**
      * This method is for removing all booking slots by provided date.
-     * @param localDate - date
+     * @param localDate - local date
      * @return Response Entity with message, quantity of deleted booking slots and HttpStatus
      */
 
@@ -121,7 +122,7 @@ public class AdminController {
 
     /**
      * This method is for removing single booking slot by provided date and time
-     * @param localDateTime - date and time
+     * @param localDateTime - local date and time
      * @return Response Entity with message and HttpStatus
      */
 
@@ -153,7 +154,7 @@ public class AdminController {
 
     /**
      * This method is for cancel user bookings
-     * @param ldt - String parameter that represent the date.
+     * @param ldt - date and time
      * @return Response Entity with message and Http status
      */
     @PutMapping ("/cancelBooking")

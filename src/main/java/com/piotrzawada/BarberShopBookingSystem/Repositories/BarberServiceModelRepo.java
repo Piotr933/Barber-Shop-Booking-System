@@ -8,14 +8,14 @@ import java.util.List;
  * in the database. It extends the CrudRepository.
  *
  * @author Piotr Zawada
- * @version 1.1
+ * @version 1.2
  */
 public interface BarberServiceModelRepo extends CrudRepository<BarberServiceModel, Long> {
 
     /**
      * Retrieve BarberService by the given Barber Service name
-     * @param name name of the Barber Service
-     * @return
+     * @param name name
+     * @return barberServiceModel
      */
     BarberServiceModel findByName(String name);
 
