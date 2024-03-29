@@ -2,8 +2,8 @@ package com.piotrzawada.BarberShopBookingSystem.Controllers;
 
 import com.piotrzawada.BarberShopBookingSystem.Dto.Response;
 import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
-import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
-import com.piotrzawada.BarberShopBookingSystem.Services.BookingService;
+import com.piotrzawada.BarberShopBookingSystem.Entities.BookingSlot;
+import com.piotrzawada.BarberShopBookingSystem.Services.BookingSlotsService;
 import com.piotrzawada.BarberShopBookingSystem.Services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/admin")
 public class AdminController {
 
-    BookingService bookingService;
+    BookingSlotsService bookingSlotsService;
 
     UserService userService;
 
@@ -92,9 +92,9 @@ public class AdminController {
         int count = 0;
 
         while (!slotTime.isAfter(closing)) {
-            Booking booking = new Booking(slotTime, 0);
-            if (bookingService.getByDataTime(booking.localDateTime) == null) {
-                bookingService.saveBooking(booking);
+            BookingSlot bookingSlot = new BookingSlot(slotTime, 0);
+            if (bookingSlotsService.getByDataTime(bookingSlot.localDateTime) == null) {
+                bookingSlotsService.saveBooking(bookingSlot);
                 count++;
             }
             slotTime = slotTime.plusMinutes(duration);
@@ -112,11 +112,11 @@ public class AdminController {
 
     @DeleteMapping("/removeSlots")
     public ResponseEntity<Response> removeSlotsByDay(String localDate) {
-        List<Booking> bookings = bookingService.availableByDate(LocalDate.parse(localDate));
-        for (Booking booking : bookings) {
-            bookingService.removeBooking(booking);
+        List<BookingSlot> bookingSlots = bookingSlotsService.availableByDate(LocalDate.parse(localDate));
+        for (BookingSlot bookingSlot : bookingSlots) {
+            bookingSlotsService.removeBooking(bookingSlot);
         }
-        return new ResponseEntity<Response>(new Response(bookings.size() + " removed  slots on  " + localDate),
+        return new ResponseEntity<Response>(new Response(bookingSlots.size() + " removed  slots on  " + localDate),
                 HttpStatus.OK);
     }
 
@@ -128,9 +128,9 @@ public class AdminController {
 
     @DeleteMapping("/removeOneSlotBy")
     public ResponseEntity<Response> removeSingleSlot(String localDateTime) {
-        Booking booking = bookingService.getByDataTime(LocalDateTime.parse(localDateTime));
-        if (booking != null) {
-            bookingService.removeBooking(booking);
+        BookingSlot bookingSlot = bookingSlotsService.getByDataTime(LocalDateTime.parse(localDateTime));
+        if (bookingSlot != null) {
+            bookingSlotsService.removeBooking(bookingSlot);
             return new ResponseEntity<>(new Response("The booking slot has been removed"), HttpStatus.OK);
 
         }
@@ -144,9 +144,9 @@ public class AdminController {
      */
     @GetMapping("/usersBookings")
     public ResponseEntity<?> userBookings() {
-        List<Booking> bookings = bookingService.allBooked();
+        List<BookingSlot> bookingSlots = bookingSlotsService.allBooked();
 
-        Map<String, String> bookingsMap = bookings.stream().collect(Collectors.toMap
+        Map<String, String> bookingsMap = bookingSlots.stream().collect(Collectors.toMap
                 (booking -> booking.getLocalDateTime().toString(), booking -> booking.getAppUser().getEmail()));
 
         return new ResponseEntity<>(bookingsMap, HttpStatus.OK);
@@ -160,17 +160,17 @@ public class AdminController {
     @PutMapping ("/cancelBooking")
     public ResponseEntity<Response> cancelBookingByDataTime (@RequestParam String ldt) {
         LocalDateTime localDateTime = LocalDateTime.parse(ldt);
-        Booking booking = bookingService.getByDataTime(localDateTime);
+        BookingSlot bookingSlot = bookingSlotsService.getByDataTime(localDateTime);
         Response response = new Response();
 
-        if (booking.getAppUser() == null) {
+        if (bookingSlot.getAppUser() == null) {
             response.setMessage("No appointment is booked for this date and time");
 
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        booking.setAppUser(null);
-        bookingService.saveBooking(booking);
+        bookingSlot.setAppUser(null);
+        bookingSlotsService.saveBooking(bookingSlot);
         response.setMessage("Booking successfully cancelled");
 
         return new ResponseEntity<>(response, HttpStatus.OK);

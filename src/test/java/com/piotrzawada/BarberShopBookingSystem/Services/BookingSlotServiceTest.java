@@ -1,8 +1,8 @@
 package com.piotrzawada.BarberShopBookingSystem.Services;
 
 import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
-import com.piotrzawada.BarberShopBookingSystem.Entities.Booking;
-import com.piotrzawada.BarberShopBookingSystem.Repositories.BookingRepo;
+import com.piotrzawada.BarberShopBookingSystem.Entities.BookingSlot;
+import com.piotrzawada.BarberShopBookingSystem.Repositories.BookingSlotsRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,17 +16,17 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class BookingServiceTest {
+class BookingSlotServiceTest {
 
     @Mock
-    BookingRepo bookingRepo;
+    BookingSlotsRepo bookingSlotsRepo;
 
     @InjectMocks
-    BookingService bookingService;
+    BookingSlotsService bookingSlotsService;
 
     private AppUser appUser;
 
-    private Booking booking, booking2, booking3, booking4;
+    private BookingSlot bookingSlot, bookingSlot2, bookingSlot3, bookingSlot4;
 
     @BeforeEach
     public void init() {
@@ -37,19 +37,19 @@ class BookingServiceTest {
                 .password("Password123#")
                 .build();
 
-        booking = Booking.builder()
+        bookingSlot = BookingSlot.builder()
                 .localDateTime(LocalDateTime.of(2026, 9, 20, 12, 30))
                 .appUser(appUser)
                 .build();
 
-        booking2 = Booking.builder()
+        bookingSlot2 = BookingSlot.builder()
                 .localDateTime(LocalDateTime.of(2026, 9, 20, 13, 0))
                 .build();
 
-        booking3 = Booking.builder()
+        bookingSlot3 = BookingSlot.builder()
                 .localDateTime( LocalDateTime.of(2026, 12, 11, 11, 0))
                 .build();
-        booking4 = Booking.builder()
+        bookingSlot4 = BookingSlot.builder()
                 .localDateTime(LocalDateTime.of(2026, 10, 2, 13, 30))
                 .price(20)
                 .appUser(appUser)
@@ -62,26 +62,26 @@ class BookingServiceTest {
     void getByDataTime() {
         LocalDateTime localDateTime = LocalDateTime.of(2026, 10, 2, 13, 30);
 
-        when(bookingRepo.findByLocalDateTime((localDateTime))).thenReturn(booking4);
+        when(bookingSlotsRepo.findByLocalDateTime((localDateTime))).thenReturn(bookingSlot4);
 
-        Assertions.assertNotNull(bookingService.getByDataTime(localDateTime));
-        Assertions.assertEquals(localDateTime, bookingService.getByDataTime(localDateTime).getLocalDateTime());
-        Assertions.assertEquals(20, bookingService.getByDataTime(localDateTime).getPrice());
+        Assertions.assertNotNull(bookingSlotsService.getByDataTime(localDateTime));
+        Assertions.assertEquals(localDateTime, bookingSlotsService.getByDataTime(localDateTime).getLocalDateTime());
+        Assertions.assertEquals(20, bookingSlotsService.getByDataTime(localDateTime).getPrice());
     }
 
     @Test
     void allBooked() {
-        when(bookingRepo.findByAppUserIsNotNull()).thenReturn(List.of(booking, booking4));
+        when(bookingSlotsRepo.findByAppUserIsNotNull()).thenReturn(List.of(bookingSlot, bookingSlot4));
 
-        Assertions.assertEquals(2, bookingService.allBooked().size());
+        Assertions.assertEquals(2, bookingSlotsService.allBooked().size());
     }
 
     @Test
     void availableByDate() {
         LocalDate localDate = LocalDate.of(2026, 9, 20);
 
-        when(bookingService.availableByDate(localDate)).thenReturn(List.of(booking2));
+        when(bookingSlotsService.availableByDate(localDate)).thenReturn(List.of(bookingSlot2));
 
-        Assertions.assertEquals(1, bookingService.availableByDate(localDate).size());
+        Assertions.assertEquals(1, bookingSlotsService.availableByDate(localDate).size());
     }
 }

@@ -41,7 +41,7 @@ public class AppUser {
 
     @OneToMany(mappedBy = "appUser")
     @JsonIgnore
-    public List<Booking> booking;
+    public List<BookingSlot> bookingSlot;
 
     public AppUser(String name, String email) {
         this.nickname = name;
