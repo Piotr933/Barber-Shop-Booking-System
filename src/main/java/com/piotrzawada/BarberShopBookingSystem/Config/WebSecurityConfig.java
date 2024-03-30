@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 /**
  * Web Security Configuration
  * @author Piotr Zawada
@@ -56,6 +58,7 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/api/admin/removeOneSlotBy").hasRole("ADMIN");
                     auth.requestMatchers("/api/admin/usersBookings").hasAnyRole("ADMIN");
                     auth.requestMatchers("/api/admin/cancelBooking").hasAnyRole("ADMIN");
+                    auth.requestMatchers("/api/register").permitAll();
                     auth.requestMatchers("/api/bookings/availableTimes").permitAll();
                     auth.requestMatchers("/api/bookings/book").hasAnyRole("USER", "ADMIN");
                     auth.requestMatchers("/api/bookings/cancel").hasAnyRole("USER", "ADMIN");
@@ -64,7 +67,7 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/api/services/add").hasAnyRole("ADMIN");
                     auth.requestMatchers("/api/services/update").hasAnyRole("ADMIN");
                     auth.requestMatchers("/api/services/delete").hasAnyRole("ADMIN");
-                    auth.requestMatchers("/api/*").permitAll();
+                    auth.requestMatchers(new AntPathRequestMatcher("/h2-console/**")).hasAnyRole("ADMIN");
                     auth.anyRequest().denyAll();
                 })
                 .headers().frameOptions().disable()
