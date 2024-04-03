@@ -30,7 +30,7 @@ class AppUserDetailsServImplTest {
     }
 
     @Test
-    void whenPassEmailAddressShouldReturnUserDetails() {
+    void loadUserByUsername_returnUserDetails() {
         AppUser appUser = new AppUser();
         appUser.setId(1L);
         appUser.setEmail("testEmail@email.com");
