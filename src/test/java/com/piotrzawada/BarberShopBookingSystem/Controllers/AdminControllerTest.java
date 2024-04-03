@@ -88,7 +88,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void adminController_register_statusOk() throws Exception {
+    void registerAdmin_isCreated() throws Exception {
         given(userService.registerUser(ArgumentMatchers.any())).willReturn(admin);
 
         ResultActions resultActions = mockMvc.perform(post("/api/admin/register/3{}343d863reg--s")
@@ -103,7 +103,7 @@ class AdminControllerTest {
 
     @Test
     @WithAnonymousUser
-    void adminController_register_statusUNAUTHORIZED() throws Exception {
+    void registerAdmin_extraADMIN_isUnauthorized() throws Exception {
         given(userService.usersByRole(ArgumentMatchers.any())).willReturn(List.of(admin, admin2, admin3));
 
         ResultActions resultActions = mockMvc.perform(post("/api/admin/register/3{}343d863reg--s")
@@ -117,7 +117,7 @@ class AdminControllerTest {
 
     @Test
     @WithAnonymousUser
-    void adminController_register_statusUNAUTHORIZED2() throws Exception {
+    void registerAdmin_wrongCredentials_isUnauthorized() throws Exception {
         ResultActions resultActions = mockMvc.perform(post("/api/admin/register/3{}343d863reg--s")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(appUser)));
@@ -129,7 +129,7 @@ class AdminControllerTest {
 
     @Test
     @WithAnonymousUser
-    void adminController_register_statusCONFLICT() throws Exception {
+    void registerAdmin_sameCredentials_statusConflict() throws Exception {
         given(userService.userExist(ArgumentMatchers.any())).willReturn(true);
 
         ResultActions resultActions = mockMvc.perform(post("/api/admin/register/3{}343d863reg--s")
@@ -144,7 +144,7 @@ class AdminControllerTest {
 
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
-    void adminController_addEmptyBookingSlotsByDay_statusCreated() throws Exception {
+    void addEmptyBookingSlotsByDay_isCreated() throws Exception {
         given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(null);
         ResultActions resultActions = mockMvc.perform(post("/api/admin/addSlots")
                 .param("localDate", "2024-03-20")
@@ -160,7 +160,7 @@ class AdminControllerTest {
 
     @Test
     @WithMockUser()
-    void adminController_addEmptyBookingSlotsByDay_statusForbidden() throws Exception {
+    void addEmptyBookingSlotsByDay_byRoleUser_isForbidden() throws Exception {
         given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(null);
         ResultActions resultActions = mockMvc.perform(post("/api/admin/addSlots")
                 .param("localDate", "2024-03-20")
@@ -174,7 +174,7 @@ class AdminControllerTest {
 
     @Test
     @WithAnonymousUser
-    void adminController_addEmptyBookingSlots_statusUnauthorized() throws Exception {
+    void addEmptyBookingSlots_byAnonymousUser_isUnauthorized() throws Exception {
         given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(null);
         ResultActions resultActions = mockMvc.perform(post("/api/admin/addSlots")
                 .param("localDate", "2024-03-20")
@@ -189,7 +189,7 @@ class AdminControllerTest {
 
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
-    void adminController_removeSlotsByDay_statusOK() throws Exception {
+    void removeSlotsByDay_isOk() throws Exception {
         given(bookingSlotsService.availableByDate(ArgumentMatchers.any())).willReturn(List.of(bookingSlot, bookingSlot2));
 
         ResultActions resultActions = mockMvc.perform(delete("/api/admin/removeSlots")
@@ -204,7 +204,7 @@ class AdminControllerTest {
 
     @Test
     @WithMockUser
-    void adminController_removeSlotsByDay_statusForbidden() throws Exception {
+    void removeSlotsByDay_byRoleUser_isForbidden() throws Exception {
         given(bookingSlotsService.availableByDate(ArgumentMatchers.any())).willReturn(List.of(bookingSlot, bookingSlot2));
 
         ResultActions resultActions = mockMvc.perform(delete("/api/admin/removeSlots")
@@ -217,7 +217,7 @@ class AdminControllerTest {
 
     @Test
     @WithAnonymousUser
-    void adminController_removeSlotsByDay_statusUnauthorized() throws Exception {
+    void removeSlotsByDay_byAnonymousUser_isUnauthorized() throws Exception {
         given(bookingSlotsService.availableByDate(ArgumentMatchers.any())).willReturn(List.of(bookingSlot, bookingSlot2));
 
         ResultActions resultActions = mockMvc.perform(delete("/api/admin/removeSlots")
@@ -229,7 +229,7 @@ class AdminControllerTest {
 
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
-    void adminController_removeOneSlotsByDateAndTime_statusOK() throws Exception {
+    void removeOneSlotsByDateAndTime_isOk() throws Exception {
         given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot);
 
         ResultActions resultActions = mockMvc.perform(delete("/api/admin/removeOneSlotBy")
@@ -243,7 +243,7 @@ class AdminControllerTest {
 
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
-    void adminController_removeOneSlotsByDateAndTime_statusConflict() throws Exception {
+    void removeOneSlotsByDateAndTime_removeNotExistingBookingSlot_isConflict() throws Exception {
         given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(null);
 
         ResultActions resultActions = mockMvc.perform(delete("/api/admin/removeOneSlotBy")
@@ -257,7 +257,7 @@ class AdminControllerTest {
 
     @Test
     @WithMockUser
-    void adminController_removeOneSlotsByDateAndTime_statusForbidden() throws Exception {
+    void removeOneSlotsByDateAndTime_byRoleUser_isForbidden() throws Exception {
         given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot);
 
         ResultActions resultActions = mockMvc.perform(delete("/api/admin/removeOneSlotBy")
@@ -269,7 +269,7 @@ class AdminControllerTest {
 
     @Test
     @WithAnonymousUser
-    void adminController_removeOneSlotsByDateAndTime_statusUnauthorized() throws Exception {
+    void removeOneSlotsByDateAndTime_byAnonymousUser_isUnauthorized() throws Exception {
         given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot);
 
         ResultActions resultActions = mockMvc.perform(delete("/api/admin/removeOneSlotBy")
@@ -283,7 +283,7 @@ class AdminControllerTest {
 
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
-    void adminController_userBookings_statusOK() throws Exception {
+    void userBookings_isOk() throws Exception {
         given(bookingSlotsService.allBooked()).willReturn(List.of(bookingSlot, bookingSlot2));
 
         ResultActions resultActions = mockMvc.perform(get("/api/admin/usersBookings")
@@ -296,7 +296,7 @@ class AdminControllerTest {
 
     @Test
     @WithMockUser
-    void adminController_userBookings_statusForbidden() throws Exception {
+    void userBookings_byRoleUser_isForbidden() throws Exception {
         given(bookingSlotsService.allBooked()).willReturn(List.of(bookingSlot, bookingSlot2));
 
         ResultActions resultActions = mockMvc.perform(get("/api/admin/usersBookings")
@@ -307,7 +307,7 @@ class AdminControllerTest {
 
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
-    void adminController_cancelBookingByDataTime_statusOK() throws Exception {
+    void cancelBookingByDataTime_isOk() throws Exception {
         given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot);
 
         ResultActions resultActions = mockMvc.perform(put("/api/admin/cancelBooking")
@@ -320,7 +320,7 @@ class AdminControllerTest {
 
     @Test
     @WithMockUser
-    void adminController_cancelBookingByDataTime_statusForbidden() throws Exception {
+    void cancelBookingByDataTime_byRoleUser_isForbidden() throws Exception {
         given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot);
 
         ResultActions resultActions = mockMvc.perform(put("/api/admin/cancelBooking")
@@ -332,7 +332,7 @@ class AdminControllerTest {
 
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
-    void adminController_cancelBookingByDataTime_statusBad_Request() throws Exception {
+    void cancelBookingByDataTime_noExitingBooking_isBadRequest() throws Exception {
         bookingSlot.setAppUser(null);
 
         given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot);

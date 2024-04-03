@@ -59,7 +59,7 @@ class BookingSlotServiceTest {
 
 
     @Test
-    void getByDataTime() {
+    void getByDataTime_returnBookingSlot() {
         LocalDateTime localDateTime = LocalDateTime.of(2026, 10, 2, 13, 30);
 
         when(bookingSlotsRepo.findByLocalDateTime((localDateTime))).thenReturn(bookingSlot4);
@@ -70,14 +70,14 @@ class BookingSlotServiceTest {
     }
 
     @Test
-    void allBooked() {
+    void allBooked_returnListOfBookedSlots() {
         when(bookingSlotsRepo.findByAppUserIsNotNull()).thenReturn(List.of(bookingSlot, bookingSlot4));
 
         Assertions.assertEquals(2, bookingSlotsService.allBooked().size());
     }
 
     @Test
-    void availableByDate() {
+    void availableByDate_returnListOfBookingSlots_returnListOfBookingSlots() {
         LocalDate localDate = LocalDate.of(2026, 9, 20);
 
         when(bookingSlotsService.availableByDate(localDate)).thenReturn(List.of(bookingSlot2));

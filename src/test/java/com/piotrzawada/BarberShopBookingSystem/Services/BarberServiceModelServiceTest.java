@@ -33,18 +33,18 @@ class BarberServiceModelServiceTest {
                 .build();
     }
     @Test
-    void service_save_returnBarberServices() {
+    void save_returnBarberServiceModel() {
         when(repo.save(standard)).thenReturn(standard);
         Assertions.assertEquals(service.save(standard), standard);
     }
     @Test
-    void service_getByName_returnBarberService() {
+    void getByName_returnBarberServiceModel() {
         when(repo.findByName(beardTrim.getName())).thenReturn(beardTrim);
         Assertions.assertEquals(beardTrim, service.getByName("Beard Trim"));
     }
 
     @Test
-    void service_getAllServices_returnListOfBarberServices() {
+    void service_getAllServices_returnListOfBarberServiceModel() {
         when(repo.findAll()).thenReturn(List.of(standard,beardTrim));
         Assertions.assertEquals(2, service.getAllServices().size());
     }

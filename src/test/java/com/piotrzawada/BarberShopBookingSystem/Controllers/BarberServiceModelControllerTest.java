@@ -54,7 +54,7 @@ class BarberServiceModelControllerTest {
 
     @Test
     @WithMockUser
-    void allServices_returnListOfBarberServices_statusOk() throws Exception {
+    void allServices_isOk() throws Exception {
         given(service.getAllServices()).willReturn(List.of(standard,beardTrim));
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/services/all"));
@@ -65,7 +65,7 @@ class BarberServiceModelControllerTest {
 
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
-    void addService_statusCreated() throws Exception {
+    void addService_isCreated() throws Exception {
         given(service.save(ArgumentMatchers.any())).willReturn(standard);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/services/add")
@@ -82,7 +82,7 @@ class BarberServiceModelControllerTest {
 
     @Test
     @WithMockUser
-    void addService_statusForbidden() throws Exception {
+    void addService_byRoleUser_isForbidden() throws Exception {
         given(service.save(ArgumentMatchers.any())).willReturn(standard);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/services/add")
@@ -99,7 +99,7 @@ class BarberServiceModelControllerTest {
 
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
-    void editPrice_statusCreated() throws Exception {
+    void editPrice_isCreated() throws Exception {
         given(service.getByName("standard")).willReturn(standard);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/services/update")
@@ -116,7 +116,7 @@ class BarberServiceModelControllerTest {
 
     @Test
     @WithMockUser
-    void editPrice_statusForbidden() throws Exception {
+    void editPrice_byRoleUser_isForbidden() throws Exception {
         given(service.getByName("standard")).willReturn(standard);
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/services/update")
@@ -129,9 +129,10 @@ class BarberServiceModelControllerTest {
                 .andDo(MockMvcResultHandlers.print());
         Assertions.assertEquals(20.00, standard.getPrice());
     }
+
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
-    void delete_statusNoContent() throws Exception {
+    void delete_isNoContent() throws Exception {
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.delete("/api/services/delete")
                 .param("name", "standard")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -142,7 +143,7 @@ class BarberServiceModelControllerTest {
 
     @Test
     @WithMockUser
-    void delete_statusForbidden() throws Exception {
+    void delete_byRoleUser_isForbidden() throws Exception {
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.delete("/api/services/delete")
                 .param("name", "standard")
                 .contentType(MediaType.APPLICATION_JSON)

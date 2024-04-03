@@ -58,7 +58,7 @@ class BookingSlotRepoTest {
 
 
     @Test
-    void bookingRepo_save_returnBooking() {
+    void save_returnBookingSlot() {
         double price = 20;
         BookingSlot savedBookingSlot = bookingSlotsRepo.save(bookingSlot);
 
@@ -67,7 +67,7 @@ class BookingSlotRepoTest {
         Assertions.assertEquals(bookingSlot.getLocalDateTime(), savedBookingSlot.getLocalDateTime());
     }
     @Test
-    void bookingRepo_findAll_returnAllBookings() {
+    void findAll_returnAllBookingsSlots() {
         userRepo.save(appUser);
         bookingSlotsRepo.save(bookingSlot);
         bookingSlotsRepo.save(bookingSlot2);
@@ -79,7 +79,7 @@ class BookingSlotRepoTest {
     }
 
     @Test
-    void  bookingRepo_findById_returnBooking() {
+    void findById_returnBookingSlot() {
         bookingSlotsRepo.save(bookingSlot);
 
         long id = bookingSlotsRepo.findAll().iterator().next().getId();
@@ -90,7 +90,7 @@ class BookingSlotRepoTest {
     }
 
     @Test
-    void bookingRepo_findAllByAppUser_returnBookingsByAppUser() {
+    void findAllByAppUser_returnListOfAppUserBookings() {
         userRepo.save(appUser);
         bookingSlotsRepo.save(bookingSlot);
         bookingSlotsRepo.save(bookingSlot2);
@@ -103,7 +103,7 @@ class BookingSlotRepoTest {
     }
 
     @Test
-    void bookingRepo_findByAppUserIsNotNull_returnListOfBookings() {
+    void bookingRepo_findByAppUserIsNotNull_returnListOfBookingsSlotsBooked() {
         userRepo.save(appUser);
         bookingSlotsRepo.save(bookingSlot);
         bookingSlotsRepo.save(bookingSlot2);
@@ -116,7 +116,7 @@ class BookingSlotRepoTest {
     }
 
     @Test
-    void bookingRepo_findByLocalDateTime_returnBooking() {
+    void bookingRepo_findByLocalDateTime_returnBookingSlot() {
         userRepo.save(appUser);
         bookingSlotsRepo.save(bookingSlot);
         bookingSlotsRepo.save(bookingSlot2);
@@ -128,7 +128,7 @@ class BookingSlotRepoTest {
     }
 
     @Test
-    void bookingRepo_findByAppUserNullAndLocalDateTimeBetween_returnListOfBooking() {
+    void bookingRepo_findByAppUserNullAndLocalDateTimeBetween_returnListOfAvaliableBookingSlots() {
         userRepo.save(appUser);
         bookingSlotsRepo.save(bookingSlot);
         bookingSlotsRepo.save(bookingSlot2);

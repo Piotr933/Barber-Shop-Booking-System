@@ -92,7 +92,7 @@ class BookingSlotControllerTest {
 
     @Test
     @WithMockUser
-    void BookingController_bookVisit_statusOK() throws Exception {
+    void bookVisit_isOK() throws Exception {
 
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
         given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot);
@@ -113,7 +113,7 @@ class BookingSlotControllerTest {
 
     @Test
     @WithAnonymousUser
-    void BookingController_bookVisit_statusUnauthorised() throws Exception {
+    void bookVisit_byAnonymousUser_isUnauthorised() throws Exception {
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
         given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot);
 
@@ -129,7 +129,7 @@ class BookingSlotControllerTest {
 
     @Test
     @WithMockUser
-    void BookingController_bookVisit_statusBadRequest() throws Exception {
+    void bookVisit_bookOutsideOpeningHours_isBadRequest() throws Exception {
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
         given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(null);
 
@@ -146,7 +146,7 @@ class BookingSlotControllerTest {
 
     @Test
     @WithMockUser
-    void BookingController_bookVisit_statusConflict() throws Exception {
+    void bookVisit_sameDateTime_isConflict() throws Exception {
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
         given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot3);
 
@@ -163,7 +163,7 @@ class BookingSlotControllerTest {
 
     @Test
     @WithMockUser
-    void BookingController_cancelVisit_statusOk() throws Exception {
+    void cancelVisit_isOk() throws Exception {
 
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails,
                 userDetails.getPassword(), userDetails.getAuthorities());
@@ -185,7 +185,7 @@ class BookingSlotControllerTest {
 
     @Test
     @WithMockUser
-    void BookingController_cancelVisit_statusNOT_FOUND() throws Exception {
+    void cancelVisit_noExistingBooking_isNotFound() throws Exception {
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
         given(bookingSlotsService.getByDataTime(ArgumentMatchers.any())).willReturn(bookingSlot2);
 
@@ -201,7 +201,7 @@ class BookingSlotControllerTest {
 
     @Test
     @WithMockUser
-    void BookingController_cancelVisit_statusBAD_REQUEST() throws Exception {
+    void cancelVisit_cancelShortNotice_isBadRequest() throws Exception {
 
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails,
                 userDetails.getPassword(), userDetails.getAuthorities());
@@ -225,7 +225,7 @@ class BookingSlotControllerTest {
 
     @Test
     @WithMockUser
-    void BookingController_myBookings_statusOK() throws Exception {
+    void myBookings_isOK() throws Exception {
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
 
         appUser.setBookingSlot(List.of(bookingSlot));
@@ -239,7 +239,7 @@ class BookingSlotControllerTest {
 
     @Test
     @WithAnonymousUser
-    void BookingController_myBookings_statusUnauthorized() throws Exception {
+    void myBookings_byAnonymousUser_isUnauthorized() throws Exception {
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
 
         appUser.setBookingSlot(List.of(bookingSlot));
@@ -249,7 +249,7 @@ class BookingSlotControllerTest {
 
     @Test
     @WithMockUser
-    void BookingController_myBookings_statusNO_CONTENT() throws Exception {
+    void myBookings_whenUserDidNotBookAnyVisits_isNoContent() throws Exception {
         given(userService.getByEmail(ArgumentMatchers.anyString())).willReturn(appUser);
         List<BookingSlot> bookingSlotList = new ArrayList<>();
         appUser.setBookingSlot(bookingSlotList);
@@ -262,7 +262,7 @@ class BookingSlotControllerTest {
 
     @Test
     @WithAnonymousUser
-    void BookingController_getAvailableSlots_statusOK() throws Exception {
+    void getAvailableSlots_isOK() throws Exception {
         String date = "2027-11-22";
         List<BookingSlot> bookingSlotList = List.of(bookingSlot, bookingSlot2);
 
@@ -278,7 +278,7 @@ class BookingSlotControllerTest {
     }
     @Test
     @WithAnonymousUser
-    void BookingController_getAvailableSlots_statusBAD_REQUEST() throws Exception {
+    void getAvailableSlots_withWrongDate_isBad_Request() throws Exception {
         String date = "2020-11-22";
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/bookings/availableTimes")

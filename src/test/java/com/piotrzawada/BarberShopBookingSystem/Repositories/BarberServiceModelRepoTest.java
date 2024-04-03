@@ -38,7 +38,7 @@ class BarberServiceModelRepoTest {
 
     }
     @Test
-    void repo_save_returnBarberService() {
+    void save_returnBarberService() {
         Assertions.assertNotNull(returnedService);
         Assertions.assertNotNull(returnedService2);
         Assertions.assertTrue(returnedService.getId() > 0);
@@ -47,7 +47,7 @@ class BarberServiceModelRepoTest {
     }
 
     @Test
-    void repo_save_returnListOfServices() {
+    void findAll_returnListOfServices() {
         List<BarberServiceModel> list = repo.findAll();
 
         Assertions.assertEquals(2, list.size());
@@ -55,7 +55,7 @@ class BarberServiceModelRepoTest {
     }
 
     @Test
-    void repo_findByName_returnBarberService() {
+    void findByName_returnBarberServiceModel() {
         BarberServiceModel service = repo.findByName("Standard Haircut");
 
         Assertions.assertNotNull(service);
