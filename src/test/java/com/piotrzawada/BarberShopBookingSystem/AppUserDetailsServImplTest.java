@@ -30,7 +30,7 @@ class AppUserDetailsServImplTest {
     }
 
     @Test
-    void loadUserByUsername_ReturnUserDetails() {
+    void loadUserByUsername_returnUserDetails() {
         AppUser appUser = new AppUser();
         appUser.setId(1L);
         appUser.setEmail("testEmail@email.com");
