@@ -6,6 +6,7 @@ import com.piotrzawada.BarberShopBookingSystem.Entities.AppUser;
 import com.piotrzawada.BarberShopBookingSystem.Entities.BookingSlot;
 import com.piotrzawada.BarberShopBookingSystem.Services.BookingSlotsService;
 import com.piotrzawada.BarberShopBookingSystem.Services.UserService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -316,6 +317,10 @@ class AdminControllerTest {
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Booking successfully cancelled\"}"));
+
+        Assertions.assertNull(bookingSlot.getAppUser());
+        Assertions.assertNull(bookingSlot.getName());
+        Assertions.assertEquals(0.0, bookingSlot.getPrice());
     }
 
     @Test

@@ -100,7 +100,10 @@ public class BookingController {
 
                 return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
             }
+
             bookingSlot.setAppUser(null);
+            bookingSlot.setName(null);
+            bookingSlot.setPrice(0.0);
             bookingSlotsService.saveBooking(bookingSlot);
             response.setMessage("Your booking has been successfully cancelled");
 
