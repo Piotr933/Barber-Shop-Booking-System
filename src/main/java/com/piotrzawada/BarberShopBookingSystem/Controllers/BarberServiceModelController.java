@@ -40,6 +40,12 @@ public class BarberServiceModelController {
     @PostMapping("/add")
     public ResponseEntity<Response> addService(String name, double price) {
         Response response = new Response();
+
+        if (service.getByName(name) != null) {
+            response.setMessage("error: " + name + " already exist");
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        }
+
         BarberServiceModel barberService = BarberServiceModel.builder()
                 .name(name)
                 .price(price)

@@ -99,6 +99,23 @@ class BarberServiceModelControllerTest {
 
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
+    void addService_serviceWithTheSameName_isConflict() throws Exception {
+        given(service.getByName(ArgumentMatchers.anyString())).willReturn(standard);
+        given(service.save(ArgumentMatchers.any())).willReturn(standard);
+
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/services/add")
+                .param("name", "Standard Haircut")
+                .param("price", "20.00")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(standard)));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isConflict())
+                .andDo(MockMvcResultHandlers.print());
+
+    }
+
+    @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     void editPrice_isCreated() throws Exception {
         given(service.getByName("standard")).willReturn(standard);
 
