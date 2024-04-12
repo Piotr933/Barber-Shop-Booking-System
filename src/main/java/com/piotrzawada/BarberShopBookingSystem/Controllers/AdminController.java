@@ -170,6 +170,8 @@ public class AdminController {
         }
 
         bookingSlot.setAppUser(null);
+        bookingSlot.setName(null);
+        bookingSlot.setPrice(0.0);
         bookingSlotsService.saveBooking(bookingSlot);
         response.setMessage("Booking successfully cancelled");
 

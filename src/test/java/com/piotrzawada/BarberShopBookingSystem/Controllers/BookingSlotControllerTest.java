@@ -181,6 +181,8 @@ class BookingSlotControllerTest {
                 .andExpect(MockMvcResultMatchers.content().json("{\"message\":\"Your booking has been successfully cancelled\"}"));
 
         Assertions.assertNull(bookingSlot3.getAppUser());
+        Assertions.assertNull(bookingSlot3.getName());
+        Assertions.assertEquals(0.0, bookingSlot.price);
     }
 
     @Test
