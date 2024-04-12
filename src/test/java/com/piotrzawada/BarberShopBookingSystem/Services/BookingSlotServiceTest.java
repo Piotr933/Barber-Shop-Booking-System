@@ -7,12 +7,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -80,8 +83,11 @@ class BookingSlotServiceTest {
     void availableByDate_returnListOfBookingSlots_returnListOfBookingSlots() {
         LocalDate localDate = LocalDate.of(2026, 9, 20);
 
-        when(bookingSlotsService.availableByDate(localDate)).thenReturn(List.of(bookingSlot2));
+
+        when(bookingSlotsRepo.findByAppUserNullAndLocalDateTimeBetween(ArgumentMatchers.any(),ArgumentMatchers.any())).
+                thenReturn(List.of(bookingSlot2));
 
         Assertions.assertEquals(1, bookingSlotsService.availableByDate(localDate).size());
+        Assertions.assertNull(bookingSlotsService.availableByDate(localDate).get(0).getAppUser());
     }
 }
