@@ -44,6 +44,13 @@ To interact with it, you can use a tool like POSTMAN.
 
 You can import the ready-to-use [Postman Colllection](https://github.com/Piotr933/Barber-Shop-Booking-System/tree/documentation/postman) into your Postman application
 
+
+## Documentation
+
+Please refer to the JavaDoc documentation for detailed on classes and methods
+
+ [JavaDoc Documentation](https://piotr933.github.io/Barber-Shop-Booking-System/)
+
 ## Author
 Piotr Zawada
 
