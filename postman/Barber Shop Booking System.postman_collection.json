@@ -1,0 +1,656 @@
+{
+	"info": {
+		"_postman_id": "629e7dae-203c-40b7-951c-96b31df40b53",
+		"name": "Barber Shop Booking System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19098718"
+	},
+	"item": [
+		{
+			"name": "Public",
+			"item": [
+				{
+					"name": "Register Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"nickname\" : \"AdminBooking1\",\r\n   \"email\": \"admin@admin.com\",\r\n   \"password\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/admin/register/3{}343d863reg--s",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"register",
+								"3{}343d863reg--s"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register AppUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"nickname\" : \"TestUser\",\r\n   \"email\": \"TestUser@test.ie\",\r\n   \"password\": \"Waisinghdw3567&61A#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Available Booking Slots By Day",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/bookings/availableTimes?date=2025-03-19",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"bookings",
+								"availableTimes"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2025-03-19"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Barber Services",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/services/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"services",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Add Barber Service",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@admin.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/services/add?name=Beard Trim&price=15.00",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"services",
+								"add"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Beard Trim"
+								},
+								{
+									"key": "price",
+									"value": "15.00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Barber Service",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@admin.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/services/add?name=Standard Haircut&price=20.00",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"services",
+								"add"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Standard Haircut"
+								},
+								{
+									"key": "price",
+									"value": "20.00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Booking Slots By Day",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@admin.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/addSlots?localDate=2025-03-19&open=08:00&close=20:00&duration=30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"addSlots"
+							],
+							"query": [
+								{
+									"key": "localDate",
+									"value": "2025-03-19"
+								},
+								{
+									"key": "open",
+									"value": "08:00"
+								},
+								{
+									"key": "close",
+									"value": "20:00"
+								},
+								{
+									"key": "duration",
+									"value": "30"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Price Of Barber Service",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@admin.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/services/update?name=Standard Haircut&newPrice=24.00",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"services",
+								"update"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Standard Haircut"
+								},
+								{
+									"key": "newPrice",
+									"value": "24.00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Barber Service",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@admin.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/services/delete?name=Beard Trim",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"services",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Beard Trim"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Singe Slots",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@admin.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/removeOneSlotBy?localDateTime=2025-03-19T19:30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"removeOneSlotBy"
+							],
+							"query": [
+								{
+									"key": "localDateTime",
+									"value": "2025-03-19T19:30"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Slots By Day",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@admin.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/removeSlots?localDate=2025-03-19",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"removeSlots"
+							],
+							"query": [
+								{
+									"key": "localDate",
+									"value": "2025-03-19"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CheckAllUsersBookings",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@admin.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/usersBookings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"usersBookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancell Booking",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@admin.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/cancelBooking?ldt=2025-03-19T15:00:00",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"cancelBooking"
+							],
+							"query": [
+								{
+									"key": "ldt",
+									"value": "2025-03-19T15:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Book",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Waisinghdw3567&61A#",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "TestUser@test.ie",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/bookings/book?localDateTime=2025-03-19T15:00:00&name=Standard Haircut",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"bookings",
+								"book"
+							],
+							"query": [
+								{
+									"key": "localDateTime",
+									"value": "2025-03-19T15:00:00"
+								},
+								{
+									"key": "name",
+									"value": "Standard Haircut"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancell Booking",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Waisinghdw3567&61A#",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "TestUser@test.ie",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/bookings/cancel?ldt=2025-03-19T15:00:00",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"bookings",
+								"cancel"
+							],
+							"query": [
+								{
+									"key": "ldt",
+									"value": "2025-03-19T15:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check User Bookings",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Waisinghdw3567&61A#",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "TestUser@test.ie",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/bookings/myBookings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"bookings",
+								"myBookings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
