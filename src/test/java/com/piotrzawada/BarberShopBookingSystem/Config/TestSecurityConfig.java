@@ -21,24 +21,26 @@ public class TestSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain configureTest(HttpSecurity httpSecurity) throws Exception {
         return  httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/test/testForAll").permitAll();
-                    auth.requestMatchers("/test/testAdmin").hasAnyRole("ADMIN");
+                    auth.requestMatchers("/api/admin/register/*").permitAll();
+                    auth.requestMatchers("/api/admin/addSlots").hasRole("ADMIN");
+                    auth.requestMatchers("/api/admin/removeSlots").hasRole("ADMIN");
+                    auth.requestMatchers("/api/admin/removeOneSlotBy").hasRole("ADMIN");
+                    auth.requestMatchers("/api/admin/usersBookings").hasAnyRole("ADMIN");
+                    auth.requestMatchers("/api/admin/cancelBooking").hasAnyRole("ADMIN");
+                    auth.requestMatchers("/api/register").permitAll();
+                    auth.requestMatchers("/api/bookings/availableTimes").permitAll();
                     auth.requestMatchers("/api/bookings/book").hasAnyRole("USER", "ADMIN");
                     auth.requestMatchers("/api/bookings/cancel").hasAnyRole("USER", "ADMIN");
                     auth.requestMatchers("/api/bookings/myBookings").hasRole("USER");
-                    auth.requestMatchers("/api/admin/add").hasRole("ADMIN");
-                    auth.requestMatchers("/api/admin/usersBookings").hasAnyRole("ADMIN");
-                    auth.requestMatchers("/api/admin/cancelBooking").hasAnyRole("ADMIN");
                     auth.requestMatchers("/api/services/all").permitAll();
                     auth.requestMatchers("/api/services/add").hasAnyRole("ADMIN");
                     auth.requestMatchers("/api/services/update").hasAnyRole("ADMIN");
                     auth.requestMatchers("/api/services/delete").hasAnyRole("ADMIN");
-                    auth.requestMatchers("/").permitAll();
-                    auth.anyRequest().permitAll();
+                    auth.anyRequest().denyAll();
                 })
                 .headers().frameOptions().disable()
                 .and()

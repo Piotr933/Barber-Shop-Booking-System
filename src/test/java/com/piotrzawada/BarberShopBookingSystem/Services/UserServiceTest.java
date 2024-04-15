@@ -34,13 +34,13 @@ class UserServiceTest {
 
 
     @Test
-    void userService_userExist_returnTrue() {
+    void userExist_returnTrue() {
         when(userRepo.findByEmail(Mockito.contains("adam443243433@gmail.com"))).thenReturn(appUser);
         Assertions.assertTrue(userService.userExist("adam443243433@gmail.com"));
     }
 
     @Test
-    void userService_getByEmail_returnAppUser() {
+    void getByEmail_returnAppUser() {
         when(userRepo.findByEmail(Mockito.contains("adam443243433@gmail.com"))).thenReturn(appUser);
         AppUser returnedAppUser = userService.getByEmail("adam443243433@gmail.com");
         Assertions.assertEquals(appUser, returnedAppUser);
