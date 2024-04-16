@@ -40,7 +40,7 @@ class UserRepoTest {
     }
 
     @Test
-    void userRepo_Save_ReturnAppUser() {
+    void save_returnAppUser() {
         AppUser appUserSaved = userRepo.save(appUser);
 
         Assertions.assertNotNull(appUserSaved.getId());
@@ -50,7 +50,7 @@ class UserRepoTest {
     }
 
     @Test
-    void userRepo_findAll_returnListOfAppUsers() {
+    void findAll_returnListOfAppUsers() {
         userRepo.save(appUser);
         userRepo.save(appUser1);
 
@@ -59,7 +59,7 @@ class UserRepoTest {
     }
 
     @Test
-    void  userRepo_findById_returnAppUser() {
+    void  findById_returnAppUser() {
         userRepo.save(appUser);
 
         Long id = userRepo.findAll().iterator().next().getId();  //gets the user ID
@@ -70,14 +70,14 @@ class UserRepoTest {
     }
 
     @Test
-    void userRepo_findByEmail_returnAppUser() {
+    void findByEmail_returnAppUser() {
         userRepo.save(appUser);
 
         Assertions.assertNotNull(userRepo.findByEmail("adam443243433@gmail.com"));
         Assertions.assertEquals("Adam", userRepo.findByEmail("adam443243433@gmail.com").getNickname());
     }
     @Test
-    void userRepo_findAllByRole_returnListOfAppUsers() {
+    void findAllByRole_returnListOfAppUsers() {
         userRepo.save(appUser);
         userRepo.save(appUser1);
         userRepo.save(admin);
