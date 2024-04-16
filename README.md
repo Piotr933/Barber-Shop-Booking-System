@@ -38,7 +38,7 @@ cd Barber-Shop-Booking-System
 5.Access the API using POSTMAN:
 
 ```bash
-Access the API through http://localhost:8080. 
+Access the API through http://localhost:8080 
 To interact with it, you can use a tool like POSTMAN. 
 ```
 
