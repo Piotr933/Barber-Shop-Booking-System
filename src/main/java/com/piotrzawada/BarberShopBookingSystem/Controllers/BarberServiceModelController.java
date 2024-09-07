@@ -68,6 +68,12 @@ public class BarberServiceModelController {
         Response response = new Response();
 
         BarberServiceModel barberService =  service.getByName(name);
+
+        if (barberService== null) {
+            response.setMessage("Error: This service does not exist");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+
         barberService.setPrice(newPrice);
 
         service.save(barberService);

@@ -146,6 +146,20 @@ class BarberServiceModelControllerTest {
                 .andDo(MockMvcResultHandlers.print());
         Assertions.assertEquals(20.00, standard.getPrice());
     }
+    @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    void editPrice_byRoleUser_isNotFound() throws Exception {
+        given(service.getByName(ArgumentMatchers.anyString())).willReturn(null);
+
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/services/update")
+                .param("name", "standard")
+                .param("newPrice", "25.50")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(standard)));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andDo(MockMvcResultHandlers.print());
+    }
 
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
