@@ -84,6 +84,11 @@ public class BarberServiceModelController {
     public ResponseEntity<Response> delete(String name) {
         Response response = new Response();
 
+        if (service.getByName(name) == null) {
+            response.setMessage("Error: This does not exist");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+
         service.deleteByName(name);
 
         response.setMessage("This Service has been successfully deleted");
