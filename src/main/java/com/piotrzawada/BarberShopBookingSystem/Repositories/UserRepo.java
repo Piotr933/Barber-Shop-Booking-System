@@ -9,7 +9,7 @@ import java.util.List;
  * in the database. It extends the CrudRepository.
  *
  * @author Piotr Zawada
- * @version 1.2
+ * @version 1.3
  */
 public interface UserRepo extends CrudRepository<AppUser, Long> {
 
