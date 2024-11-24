@@ -1,0 +1,9 @@
+com.piotrzawada.BarberShopBookingSystem
+com.piotrzawada.BarberShopBookingSystem.Config
+com.piotrzawada.BarberShopBookingSystem.Controllers
+com.piotrzawada.BarberShopBookingSystem.Dto
+com.piotrzawada.BarberShopBookingSystem.Entities
+com.piotrzawada.BarberShopBookingSystem.Exception
+com.piotrzawada.BarberShopBookingSystem.Repositories
+com.piotrzawada.BarberShopBookingSystem.Security
+com.piotrzawada.BarberShopBookingSystem.Services
