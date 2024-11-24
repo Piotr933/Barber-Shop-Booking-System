@@ -44,6 +44,16 @@ To interact with it, you can use a tool like POSTMAN.
 
 You can import the ready-to-use [Postman Colllection](https://github.com/Piotr933/Barber-Shop-Booking-System/tree/documentation/postman) into your Postman application
 
+Below are videos with quick demos on how to access those endpoints in POSTMAN:
+
+[POSTMAN Accessing Public Endpoints ](https://www.youtube.com/watch?v=CcncbZQ4Dpo&list=PLSwAIST1IRCzbJUSXn4Aqrw4nbDnFKwBU)
+
+[POSTMAN Accessing Admin Endpoints  ](https://www.youtube.com/watch?v=bcKVaA1RReI&list=PLSwAIST1IRCzbJUSXn4Aqrw4nbDnFKwBU&index=3)
+
+[POSTMAN Accessing App User Endpoints ](https://www.youtube.com/watch?v=QpzCip00oLM)
+
+
+
 
 ## Documentation
 
@@ -57,7 +67,7 @@ Piotr Zawada
 [![Connect with me on LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/piotr-zawada-728b21120/)
 
 ## Version 
-* 1.2 
+* 1.3 
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
