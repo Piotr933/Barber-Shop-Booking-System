@@ -42,7 +42,7 @@ Access the API through http://localhost:8080
 To interact with it, you can use a tool like POSTMAN. 
 ```
 
-You can import the ready-to-use [Postman Colllection](https://github.com/Piotr933/Barber-Shop-Booking-System/tree/documentation/postman) into your Postman application
+You can import the ready-to-use [Postman Colllection](https://github.com/Piotr933/Barber-Shop-Booking-System/tree/main/postman) into your Postman application
 
 Below are videos with quick demos on how to access those endpoints in POSTMAN:
 
