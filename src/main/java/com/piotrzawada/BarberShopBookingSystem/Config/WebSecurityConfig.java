@@ -17,7 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 /**
  * Web Security Configuration
  * @author Piotr Zawada
- * @version 1.2
+ * @version 1.3
  */
 @Configuration
 @EnableWebSecurity

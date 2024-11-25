@@ -22,7 +22,7 @@ import java.util.List;
  * Rest Controller for handles REST requests related to the Bookings.
  *
  * @author Piotr Zawada
- * @version 1.2
+ * @version 1.3
  */
 @RestController
 @AllArgsConstructor
