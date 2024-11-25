@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * Rest Controller for handles REST requests related to the Barber Services.
  *
  * @author Piotr Zawada
- * @version 1.2
+ * @version 1.3
  */
 
 @RestController
@@ -68,6 +68,12 @@ public class BarberServiceModelController {
         Response response = new Response();
 
         BarberServiceModel barberService =  service.getByName(name);
+
+        if (barberService== null) {
+            response.setMessage("Error: This service does not exist");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+
         barberService.setPrice(newPrice);
 
         service.save(barberService);
@@ -83,6 +89,11 @@ public class BarberServiceModelController {
     @DeleteMapping("/delete")
     public ResponseEntity<Response> delete(String name) {
         Response response = new Response();
+
+        if (service.getByName(name) == null) {
+            response.setMessage("Error: This does not exist");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
 
         service.deleteByName(name);
 

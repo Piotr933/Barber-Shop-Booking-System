@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * Exception handler for REST controllers, providing consistent handling of specific exceptions and generating
  * appropriate response entities.
  * @author Piotr Zawada
- * @version 1.2
+ * @version 1.3
  * */
 @RestControllerAdvice
 public class RestExceptionHandler {

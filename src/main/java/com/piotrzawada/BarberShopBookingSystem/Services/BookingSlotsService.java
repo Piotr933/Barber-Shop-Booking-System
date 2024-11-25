@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * The BookingService class offers a complete interface for Booking entity management, handling CRUD operations
  * @author Piotr Zawada
- * @version 1.2
+ * @version 1.3
  */
 @Service
 @AllArgsConstructor

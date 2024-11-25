@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * JPA Entity representing an application user (User or Admin)
  * @author Piotr Zawada
- * @version 1.2
+ * @version 1.3
  */
 @Entity
 @Data
