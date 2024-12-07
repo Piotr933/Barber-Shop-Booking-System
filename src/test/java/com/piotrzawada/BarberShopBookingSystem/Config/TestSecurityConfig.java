@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -21,9 +22,10 @@ public class TestSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain configureTest(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
         return  httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
+                .headers(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/api/admin/register/*").permitAll();
                     auth.requestMatchers("/api/admin/addSlots").hasRole("ADMIN");
@@ -40,10 +42,9 @@ public class TestSecurityConfig {
                     auth.requestMatchers("/api/services/add").hasAnyRole("ADMIN");
                     auth.requestMatchers("/api/services/update").hasAnyRole("ADMIN");
                     auth.requestMatchers("/api/services/delete").hasAnyRole("ADMIN");
+                    auth.requestMatchers(new AntPathRequestMatcher("/h2-console/**")).hasAnyRole("ADMIN");
                     auth.anyRequest().denyAll();
                 })
-                .headers().frameOptions().disable()
-                .and()
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
