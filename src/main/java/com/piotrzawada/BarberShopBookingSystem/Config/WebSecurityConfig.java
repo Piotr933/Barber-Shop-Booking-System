@@ -51,6 +51,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
         return  httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
+                .headers(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/api/admin/register/*").permitAll();
                     auth.requestMatchers("/api/admin/addSlots").hasRole("ADMIN");
@@ -70,8 +71,6 @@ public class WebSecurityConfig {
                     auth.requestMatchers(new AntPathRequestMatcher("/h2-console/**")).hasAnyRole("ADMIN");
                     auth.anyRequest().denyAll();
                 })
-                .headers().frameOptions().disable()
-                .and()
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }

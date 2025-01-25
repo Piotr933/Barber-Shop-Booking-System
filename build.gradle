@@ -1,12 +1,16 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.0.2'
-	id 'io.spring.dependency-management' version '1.1.0'
-}
+	id 'org.springframework.boot' version '3.4.0'
+	id 'io.spring.dependency-management' version '1.1.6'}
 
 group = 'com.piotrzawada'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
 
 configurations {
 	compileOnly {
@@ -29,9 +33,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-	testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
-	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
-	testImplementation 'org.mockito:mockito-core:5.1.1'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 test {
