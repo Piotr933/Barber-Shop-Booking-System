@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+##Ignore Keystore file
+src/main/resources/keystore.p12

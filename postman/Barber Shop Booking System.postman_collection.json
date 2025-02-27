@@ -24,12 +24,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/admin/register/3{}343d863reg--s",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/admin/register/3{}343d863reg--s",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"admin",
@@ -55,12 +55,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/register",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/register",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"register"
@@ -78,12 +78,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/bookings/availableTimes?date=2025-03-19",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/bookings/availableTimes?date=2025-03-19",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"bookings",
@@ -105,12 +105,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/services/all",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/services/all",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"services",
@@ -146,12 +146,12 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/services/add?name=Beard Trim&price=15.00",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/services/add?name=Beard Trim&price=15.00",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"services",
@@ -192,12 +192,12 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/services/add?name=Standard Haircut&price=20.00",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/services/add?name=Standard Haircut&price=20.00",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"services",
@@ -238,12 +238,12 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/admin/addSlots?localDate=2025-03-19&open=08:00&close=20:00&duration=30",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/admin/addSlots?localDate=2025-03-19&open=08:00&close=20:00&duration=30",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"admin",
@@ -292,12 +292,12 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/services/update?name=Standard Haircut&newPrice=24.00",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/services/update?name=Standard Haircut&newPrice=24.00",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"services",
@@ -338,12 +338,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/services/delete?name=Beard Trim",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/services/delete?name=Beard Trim",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"services",
@@ -380,12 +380,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/admin/removeOneSlotBy?localDateTime=2025-03-19T19:30",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/admin/removeOneSlotBy?localDateTime=2025-03-19T12:30",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"admin",
@@ -394,7 +394,7 @@
 							"query": [
 								{
 									"key": "localDateTime",
-									"value": "2025-03-19T19:30"
+									"value": "2025-03-19T12:30"
 								}
 							]
 						}
@@ -422,12 +422,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/admin/removeSlots?localDate=2025-03-19",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/admin/removeSlots?localDate=2025-03-19",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"admin",
@@ -464,12 +464,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/admin/usersBookings",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/admin/usersBookings",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"admin",
@@ -500,12 +500,12 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/admin/cancelBooking?ldt=2025-03-19T15:00:00",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/admin/cancelBooking?ldt=2025-03-19T15:00:00",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"admin",
@@ -547,12 +547,12 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/bookings/book?localDateTime=2025-03-19T15:00:00&name=Standard Haircut",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/bookings/book?localDateTime=2025-03-19T15:00:00&name=Standard Haircut",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"bookings",
@@ -593,12 +593,12 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/bookings/cancel?ldt=2025-03-19T15:00:00",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/bookings/cancel?ldt=2025-03-19T15:00:00",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"bookings",
@@ -635,12 +635,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/bookings/myBookings",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/bookings/myBookings",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"bookings",

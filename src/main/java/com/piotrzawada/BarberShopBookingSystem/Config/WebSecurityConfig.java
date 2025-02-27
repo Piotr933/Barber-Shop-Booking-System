@@ -52,6 +52,7 @@ public class WebSecurityConfig {
         return  httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(AbstractHttpConfigurer::disable)
+                .requiresChannel(channel -> channel.anyRequest().requiresSecure())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/api/admin/register/*").permitAll();
                     auth.requestMatchers("/api/admin/addSlots").hasRole("ADMIN");
