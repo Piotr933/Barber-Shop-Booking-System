@@ -33,6 +33,7 @@ public class TestSecurityConfig {
                     auth.requestMatchers("/api/admin/removeOneSlotBy").hasRole("ADMIN");
                     auth.requestMatchers("/api/admin/usersBookings").hasAnyRole("ADMIN");
                     auth.requestMatchers("/api/admin/cancelBooking").hasAnyRole("ADMIN");
+                    auth.requestMatchers("/api/admin/updates").hasAnyRole("ADMIN");
                     auth.requestMatchers("/api/register").permitAll();
                     auth.requestMatchers("/api/bookings/availableTimes").permitAll();
                     auth.requestMatchers("/api/bookings/book").hasAnyRole("USER", "ADMIN");
